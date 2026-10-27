@@ -1,0 +1,229 @@
+/* ==========================================================================
+   XON SAROY - INFINITY Qopi Dizayni va Megamix Uslubidagi 3D/2D Effektlar
+   11 ta rangli tasmalar va yorug'lik (Glow) effektlari
+   ========================================================================== */
+
+:root {
+  --xon-red: #C8102E;
+  --xon-red-dark: #A00B22;
+  --xon-blue: #0F2C59;
+  --xon-blue-dark: #081B38;
+  --xon-gold: #D97706;
+  --xon-gold-light: #F59E0B;
+  --xon-gray-bg: #F8FAFC;
+  --xon-border: #E2E8F0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Gradientlar */
+.bg-gradient-xon {
+  background: linear-gradient(135deg, #0F2C59 0%, #1E3A8A 50%, #081B38 100%);
+}
+
+.bg-gradient-red {
+  background: linear-gradient(135deg, #C8102E 0%, #991B1B 100%);
+}
+
+.bg-gradient-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+}
+
+.text-gold {
+  color: #F59E0B;
+}
+
+/* ==========================================================================
+   XON SAROY INFINITY QOP MOCKUP EFFEKTLARI
+   ========================================================================== */
+
+/* 2D/3D Qop Asosiy Konteyneri */
+.bag-2d-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  filter: drop-shadow(0 16px 24px rgba(15, 23, 42, 0.16)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.06));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  will-change: transform, filter;
+  cursor: pointer;
+}
+
+/* Sichqoncha olib borilganda (Hover): 3D ko'tarilish */
+.bag-card:hover .bag-2d-container {
+  transform: translateY(-14px) scale(1.035) rotate(-0.5deg);
+}
+
+/* ==========================================================================
+   BARCHA 11 TA MAHSULOT UCHUN YORUG'LIK (GLOWING) EFFEKTLARI
+   ========================================================================== */
+
+/* 1. INFINITY — Binafsha (Purple) */
+.glow-purple:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(124, 58, 237, 0.35)) 
+          drop-shadow(0 0 26px rgba(124, 58, 237, 0.52));
+}
+
+/* 2. BlockFix — To'q kulrang (Dark Grey) */
+.glow-darkgrey:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(75, 85, 99, 0.4)) 
+          drop-shadow(0 0 26px rgba(107, 114, 128, 0.48));
+}
+
+/* 3. SILK POLY 20 — Havorang/Ko'k (Cyan) */
+.glow-cyan:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(2, 132, 199, 0.35)) 
+          drop-shadow(0 0 26px rgba(14, 165, 233, 0.52));
+}
+
+/* 4. GLATT 05 — Och ko'k (Light Blue) */
+.glow-lightblue:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(56, 189, 248, 0.38)) 
+          drop-shadow(0 0 26px rgba(56, 189, 248, 0.55));
+}
+
+/* 5. Cover — Yashil (Green) */
+.glow-green:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(22, 163, 74, 0.35)) 
+          drop-shadow(0 0 26px rgba(34, 197, 94, 0.52));
+}
+
+/* 6. FleXon — Pushti/Siyohrang (Pink/Magenta) */
+.glow-magenta:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(219, 39, 119, 0.35)) 
+          drop-shadow(0 0 26px rgba(236, 72, 153, 0.52));
+}
+
+/* 7. DOMINANT — Qizil (Red) */
+.glow-red:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(220, 38, 38, 0.35)) 
+          drop-shadow(0 0 26px rgba(239, 68, 68, 0.52));
+}
+
+/* 8. DOMINANT-SP — Olovrang/Zargaldoq (Orange) */
+.glow-orange:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(234, 88, 12, 0.35)) 
+          drop-shadow(0 0 26px rgba(249, 115, 22, 0.55));
+}
+
+/* 9. ARMOR — Jigarrang/Qorong'i ko'k (Navy) */
+.glow-navy:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(30, 41, 59, 0.45)) 
+          drop-shadow(0 0 26px rgba(15, 23, 42, 0.58));
+}
+
+/* 10. HYDRO 255 — Dengiz ko'ki (Teal) */
+.glow-teal:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(13, 148, 136, 0.35)) 
+          drop-shadow(0 0 26px rgba(20, 184, 166, 0.52));
+}
+
+/* 11. LEVEL — Sariq/Oltin (Yellow/Gold) */
+.glow-yellow:hover .bag-2d-container {
+  filter: drop-shadow(0 22px 32px rgba(234, 179, 8, 0.35)) 
+          drop-shadow(0 0 26px rgba(250, 204, 21, 0.55));
+}
+
+/* ==========================================================================
+   KARTOCHKALAR VA MATNLAR
+   ========================================================================== */
+
+.bag-card {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bag-card:hover {
+  box-shadow: 0 20px 35px -10px rgba(15, 44, 89, 0.16), 0 10px 10px -5px rgba(200, 16, 46, 0.04);
+  border-color: #CBD5E1;
+}
+
+/* Yaltiroq Stiker / Bonus nishoni */
+.shimmer-badge {
+  background: linear-gradient(90deg, #F59E0B, #FEF08A, #F59E0B);
+  background-size: 200% auto;
+  animation: shimmer 3s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Interaktiv Filtr tugmalari */
+.filter-btn.active {
+  background-color: #C8102E;
+  color: #FFFFFF;
+  border-color: #C8102E;
+  box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+}
+
+/* Bosqichli tab va yaltiroq chegara */
+.tech-spec-row:nth-child(even) {
+  background-color: #F8FAFC;
+}
+
+/* Quruq qurilish to'rlari (Background Pattern) */
+.bg-grid-pattern {
+  background-image: radial-gradient(rgba(15, 44, 89, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.bg-grid-pattern-dark {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Maxsus Modal oynalar */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Tezkor suzuvchi aloqa tugmalari */
+.floating-contact-btn {
+  box-shadow: 0 8px 24px rgba(200, 16, 46, 0.35);
+  animation: pulse-ring 2.5s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(200, 16, 46, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0);
+  }
+}
+
+.settings-pill {
+  transition: all 0.2s ease;
+}
+
+/* PDF Chop etish stili (@media print) */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #productModal, #productModal * {
+    visibility: visible;
+  }
+  #productModal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: white;
+    box-shadow: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
