@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XON SAROY — Quruq Qurilish Aralashmalari | Turkiya Texnologiyasi</title>
+  <meta name="description" content="XON SAROY — Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan premium quruq qurilish aralashmalari: gips va polimer shpaklyovkalar, suvoqlar, kafel yelimlari, gidroizolyatsiya va quyma pol.">
+  <meta name="keywords" content="XON SAROY, quruq qurilish aralashmalari, shpaklyovka, suvoq, kafel yelimi, quyma pol, gips, Megamix, Chirchiq, qurilish mollari">
+  
+  <!-- Favicon & Profile Branding -->
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg">
+  <meta property="og:image" content="assets/images/logo.jpg">
+  <meta property="og:title" content="XON SAROY — Quruq Qurilish Aralashmalari">
+  <meta property="og:description" content="Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan premium quruq qurilish aralashmalari.">
+  <meta name="theme-color" content="#0F2C59">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            xon: {
+              red: '#C8102E',
+              'red-dark': '#A00B22',
+              blue: '#0F2C59',
+              'blue-dark': '#081B38',
+              gold: '#D97706',
+              'gold-light': '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Maxsus stillar va animatsiyalar -->
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-red-600 selection:text-white">
+
+  <!-- =====================================================================
+       TOP BAR (Aloqa telefonlari, til tanlash, shior)
+       ===================================================================== -->
+  <div class="bg-slate-950 text-slate-300 text-xs border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-3">
+      <!-- Shior & Texnologiya -->
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-red-600 text-[10px] text-white font-bold">★</span>
+        <span data-i18n="brandSubtitle" class="font-medium tracking-wide">
+          Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan
+        </span>
+      </div>
+
+      <!-- Telefonlar va Til almashtirgich -->
+      <div class="flex items-center gap-4 sm:gap-6 flex-wrap">
+        <!-- Telefon raqamlari -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="tel:+998904270010" class="hover:text-amber-400 font-semibold transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"></path></svg>
+            +998 90 427-00-10
+          </a>
+          <a href="tel:+998994280010" class="hover:text-amber-400 font-semibold transition hidden lg:inline">
+            +998 99 428-00-10
+          </a>
+          <a href="tel:+998994290010" class="hover:text-amber-400 font-semibold transition hidden xl:inline">
+            +998 99 429-00-10
+          </a>
+        </div>
+
+        <!-- Telegram Sozlamalari (Admin/Integratsiya tugmasi) -->
+        <button onclick="openTelegramSettingsModal()" title="Telegram Bot API sozlamalari" class="settings-pill text-[11px] text-slate-400 hover:text-white flex items-center gap-1 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">
+          <svg class="w-3 h-3 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Bot API</span>
+        </button>
+
+        <!-- Tilni tanlash (UZ / RU) -->
+        <div class="flex items-center bg-slate-900 border border-slate-700 rounded-md p-0.5">
+          <button id="langUzBtn" onclick="setLanguage('uz')" class="px-2.5 py-0.5 text-xs font-bold rounded bg-red-600 text-white shadow-sm transition">
+            UZ
+          </button>
+          <button id="langRuBtn" onclick="setLanguage('ru')" class="px-2.5 py-0.5 text-xs font-bold rounded text-slate-400 hover:text-white transition">
+            RU
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ASOSIY HEADER & NAVIGATSIYA
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logotip (Rasmiy XON SAROY brend emblemasi) -->
+        <a href="#home" class="flex items-center gap-3.5 group">
+          <div class="relative">
+            <img src="assets/images/logo.jpg" alt="XON SAROY" class="w-14 h-14 rounded-2xl object-cover shadow-lg border-2 border-amber-400/60 group-hover:scale-105 transition-all duration-300 ring-2 ring-blue-950/10">
+            <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white" title="Ishlab chiqaruvchi"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl font-black tracking-tight text-slate-950 font-serif">XON SAROY</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 uppercase shadow-sm">PRO</span>
+            </div>
+            <p class="text-[10px] font-bold text-red-600 uppercase tracking-widest -mt-0.5">
+              Quruq Qurilish Aralashmalari
+            </p>
+          </div>
+        </a>
+
+        <!-- Desktop Menyu -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-700">
+          <a href="#home" data-i18n="navHome" class="hover:text-red-600 transition">Bosh sahifa</a>
+          <a href="#catalog" data-i18n="navCatalog" class="hover:text-red-600 transition">Mahsulotlar</a>
+          <a href="#bonus" data-i18n="navBonus" class="text-amber-600 hover:text-amber-700 transition flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            <span data-i18n="navBonus">Ustalar Bonusi</span>
+          </a>
+          <a href="#calculator" data-i18n="navCalc" class="hover:text-red-600 transition">Sarf Kalkulyatori</a>
+          <a href="#advantages" data-i18n="navAdvantages" class="hover:text-red-600 transition">Afzalliklar</a>
+          <a href="#contact" data-i18n="navContact" class="hover:text-red-600 transition">Aloqa</a>
+        </nav>
+
+        <!-- Ariza qoldirish CTA tugmasi -->
+        <div class="hidden sm:flex items-center gap-4">
+          <button onclick="openOrderModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm font-extrabold shadow-md shadow-red-600/30 hover:shadow-lg transition-all flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span data-i18n="quickOrderBtn">Ariza qoldirish</span>
+          </button>
+        </div>
+
+        <!-- Mobil Menyu Tugmasi -->
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-700 hover:text-red-600 hover:bg-slate-100 transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobil Menyu Kontenti -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+      <a href="#home" data-i18n="navHome" class="block py-2 text-slate-800 font-bold hover:text-red-600">Bosh sahifa</a>
+      <a href="#catalog" data-i18n="navCatalog" class="block py-2 text-slate-800 font-bold hover:text-red-600">Mahsulotlar</a>
+      <a href="#bonus" data-i18n="navBonus" class="block py-2 text-amber-600 font-bold">Ustalar Bonusi</a>
+      <a href="#calculator" data-i18n="navCalc" class="block py-2 text-slate-800 font-bold hover:text-red-600">Sarf Kalkulyatori</a>
+      <a href="#advantages" data-i18n="navAdvantages" class="block py-2 text-slate-800 font-bold hover:text-red-600">Afzalliklar</a>
+      <a href="#contact" data-i18n="navContact" class="block py-2 text-slate-800 font-bold hover:text-red-600">Aloqa</a>
+      
+      <div class="pt-3 border-t border-slate-200">
+        <button onclick="openOrderModal()" class="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-center block shadow-md">
+          <span data-i18n="quickOrderBtn">Ariza qoldirish</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       HERO BANNER SEKSIYASI (Megamix.uz uslubida)
+       ===================================================================== -->
+  <section id="home" class="relative overflow-hidden bg-gradient-xon text-white py-16 lg:py-24 bg-grid-pattern-dark">
+    <!-- Orqa fon nurlari -->
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-red-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Chap: Matnli blok -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <!-- Sifat nishoni -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-bold text-amber-300 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span data-i18n="heroBadge">100% Sifat Kafolati • Turkiya Texnologiyasi</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            <span class="text-white" data-i18n="heroTitle">Mustahkam Qurilishning Oliy Asosi</span>
+          </h1>
+
+          <p data-i18n="heroDesc" class="text-slate-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            XON SAROY — professional ustalar va yirik qurilish ob'ektlari uchun yuqori darajada modifikatsiyalangan zamonaviy quruq qurilish aralashmalari brendi.
+          </p>
+
+          <!-- Asosiy tugmalar -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+            <a href="#catalog" class="px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold text-base shadow-xl shadow-red-600/30 hover:scale-105 transition-all flex items-center gap-3">
+              <span data-i18n="heroCatalogBtn">Katalog bilan tanishish</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+
+            <button onclick="openBonusModal()" class="px-7 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-amber-400/40 text-amber-300 font-extrabold text-base backdrop-blur-md hover:scale-105 transition-all flex items-center gap-2">
+              <span class="text-xl">🎁</span>
+              <span data-i18n="heroBonusBtn">Aksiyada qatnashish</span>
+            </button>
+          </div>
+
+          <!-- Raqamlar / Statistika -->
+          <div class="pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-white" data-i18n="heroStat1Val">11+</div>
+              <div class="text-xs text-slate-300 font-medium" data-i18n="heroStat1Lab">Mahsulot turlari</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-amber-400" data-i18n="heroStat2Val">25 kg</div>
+              <div class="text-xs text-slate-300 font-medium" data-i18n="heroStat2Lab">Mustahkam qadoq</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-rose-400" data-i18n="heroStat3Val">100%</div>
+              <div class="text-xs text-slate-300 font-medium" data-i18n="heroStat3Lab">Turkiya standarti</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- O'ng: Vizual mahsulotlar 3D namoyishi -->
+        <div class="lg:col-span-5 relative flex items-center justify-center">
+          <div class="relative w-full max-w-sm">
+            <!-- Orqa yorug'lik -->
+            <div class="absolute inset-0 bg-red-600/30 rounded-3xl blur-2xl transform rotate-6 scale-95"></div>
+
+            <!-- Kartochka foni -->
+            <div class="relative bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl shadow-2xl">
+              <!-- Qop tasviri -->
+              <div class="w-full flex justify-center py-2" id="heroFeaturedBag">
+                <img src="assets/images/infinity.jpg" alt="XON SAROY INFINITY" class="w-64 max-h-[320px] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300">
+              </div>
+
+              <!-- Pastki ta'kidlash -->
+              <div class="mt-4 p-4 rounded-2xl bg-slate-900/80 border border-white/10 text-center">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-widest block">Flagman Mahsulot</span>
+                <span class="text-base font-extrabold text-white">XON SAROY INFINITY (C1TE)</span>
+                <p class="text-xs text-slate-400 mt-1">УСИЛЕННЫЙ КЛЕЙ ПЛИТОЧНЫЙ • 25 KG</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       USTALAR UCHUN MAXSUS BONUS BANNERI (AKSIYA BLOKI)
+       ===================================================================== -->
+  <section id="bonus" class="py-12 bg-slate-900 relative overflow-hidden border-y-4 border-amber-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="bg-gradient-to-r from-amber-600 via-rose-700 to-slate-900 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden">
+        
+        <!-- Yaltiroq fon bezaklari -->
+        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-amber-400/20 rounded-full blur-2xl"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8 space-y-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-black/40 text-amber-300 font-extrabold text-xs uppercase tracking-wider shimmer-badge" data-i18n="bonusTag">
+              USTALAR VA XARIDORLAR UCHUN AKSIYA
+            </span>
+
+            <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight" data-i18n="bonusTitle">
+              Ustalar uchun maxsus BONUS! Qop ichidan stikerni toping va sovg'alarni yutib oling!
+            </h2>
+
+            <p class="text-slate-100 text-sm sm:text-base leading-relaxed max-w-3xl" data-i18n="bonusDesc">
+              Har bir XON SAROY mahsuloti qopida maxsus himoyalangan yutuqli stiker joylashtirilgan. Stikerni oching, kodni ro'yxatdan o'tkazing va avtomobil, zamonaviy maishiy texnikalar hamda professional suvoq apparatlarini qo'lga kiriting!
+            </p>
+
+            <!-- Sovg'alar ro'yxati -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div class="p-3 rounded-xl bg-black/30 border border-white/10 backdrop-blur-sm text-center">
+                <span class="text-2xl block mb-1">🚗</span>
+                <span class="text-xs font-bold text-amber-200" data-i18n="bonusPrize1">Tracker / Onix</span>
+              </div>
+              <div class="p-3 rounded-xl bg-black/30 border border-white/10 backdrop-blur-sm text-center">
+                <span class="text-2xl block mb-1">🏗️</span>
+                <span class="text-xs font-bold text-amber-200" data-i18n="bonusPrize2">PFT Suvoq apparatlari</span>
+              </div>
+              <div class="p-3 rounded-xl bg-black/30 border border-white/10 backdrop-blur-sm text-center">
+                <span class="text-2xl block mb-1">📱</span>
+                <span class="text-xs font-bold text-amber-200" data-i18n="bonusPrize3">Smartfonlar & Texnika</span>
+              </div>
+              <div class="p-3 rounded-xl bg-black/30 border border-white/10 backdrop-blur-sm text-center">
+                <span class="text-2xl block mb-1">💵</span>
+                <span class="text-xs font-bold text-amber-200" data-i18n="bonusPrize4">Kafolatlangan yutuq</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- O'ng: Aksiya tugmasi -->
+          <div class="lg:col-span-4 flex flex-col items-center justify-center text-center">
+            <div class="p-6 rounded-2xl bg-black/40 border border-amber-400/40 backdrop-blur-md w-full max-w-xs">
+              <div class="w-16 h-16 mx-auto rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-3xl font-black mb-3 shadow-lg">
+                🎁
+              </div>
+              <h3 class="text-lg font-black text-amber-300">Yutuqli Stiker</h3>
+              <p class="text-xs text-slate-200 mt-1 mb-4">Har bir qopda kafolatlangan imkoniyat!</p>
+              
+              <button onclick="openBonusModal()" class="w-full py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/20">
+                <span data-i18n="bonusBtnMore">Aksiya shartlari bilan tanishish</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       MAHSULOTLAR KATALOGI (KATEGORIYALAR VA GRID)
+       ===================================================================== -->
+  <section id="catalog" class="py-16 lg:py-24 bg-slate-50 bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Sarlavha -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-black uppercase tracking-widest text-red-600 bg-red-50 border border-red-200 px-3.5 py-1 rounded-full" data-i18n="catalogTag">
+          MAHSULOTLAR TARKIBI
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 tracking-tight" data-i18n="catalogTitle">
+          Quruq Qurilish Aralashmalari Katalogi
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-2" data-i18n="catalogDesc">
+          Sizning bino va xonadonlaringiz uchun eng sara xomashyo va Turkiya qo'shimchalari asosida tayyorlangan mahsulotlar
+        </p>
+
+        <!-- Kategoriya Filtr Tablari -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-8">
+          <button onclick="filterCategory('all', this)" class="filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-red-500 transition-all">
+            <span data-i18n="catAll">Barchasi</span> (11)
+          </button>
+          <button onclick="filterCategory('putty', this)" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-red-500 transition-all">
+            <span data-i18n="catPutty">Gips va Polimer Shpaklyovkalar</span>
+          </button>
+          <button onclick="filterCategory('plaster', this)" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-red-500 transition-all">
+            <span data-i18n="catPlaster">Shtukaturka va Suvoqlar</span>
+          </button>
+          <button onclick="filterCategory('adhesive', this)" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-red-500 transition-all">
+            <span data-i18n="catAdhesive">Yelimlar va Gidroizolyatsiya</span>
+          </button>
+          <button onclick="filterCategory('floor', this)" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-red-500 transition-all">
+            <span data-i18n="catFloor">Quyma Pol Aralashmalari</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dinamik Mahsulotlar To'ri (Grid) -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- JavaScript orqali barcha 11 ta mahsulot yuklanadi -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SARF KALKULYATORI (Ustalar uchun maxsus instrument)
+       ===================================================================== -->
+  <section id="calculator" class="py-16 bg-white border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-slate-900 to-blue-950 rounded-3xl p-8 lg:p-12 text-white shadow-2xl">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <!-- Chap qism: Matn va kirish maydonlari -->
+          <div class="lg:col-span-7 space-y-6">
+            <div>
+              <span class="text-xs font-black uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full" data-i18n="calcTag">
+                USTALAR UCHUN QULAYLIK
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white mt-3" data-i18n="calcTitle">
+                Aralashma Sarfini Hisoblash Kalkulyatori
+              </h2>
+              <p class="text-slate-300 text-sm mt-1" data-i18n="calcDesc">
+                Qurilish maydoni va kerakli qalinlikni kiriting — dastur qancha kilogramm va nechta qop mahsulot kerakligini soniyalarda hisoblab beradi.
+              </p>
+            </div>
+
+            <!-- Kalkulyator inputlari -->
+            <div class="space-y-4">
+              <!-- Mahsulot tanlash -->
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider" data-i18n="calcSelectLabel">
+                  Mahsulotni tanlang:
+                </label>
+                <select id="calcProductSelect" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition">
+                  <!-- Dinamik options -->
+                </select>
+              </div>
+
+              <!-- Maydon va Qalinlik -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider" data-i18n="calcAreaLabel">
+                    Yuza maydoni (m²):
+                  </label>
+                  <input type="number" id="calcArea" value="50" min="1" step="1" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider" data-i18n="calcLayerLabel">
+                    Qatlam qalinligi (mm):
+                  </label>
+                  <input type="number" id="calcThickness" value="10" min="0.5" step="0.5" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition font-bold" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- O'ng qism: Natija kartochkasi -->
+          <div class="lg:col-span-5">
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl text-center space-y-6">
+              <span class="text-xs font-bold text-amber-300 uppercase tracking-widest block" data-i18n="calcResultTitle">
+                Hisob-kitob natijasi:
+              </span>
+
+              <div class="py-4 border-y border-white/10 space-y-4">
+                <div>
+                  <div class="text-xs text-slate-400" data-i18n="calcTotalKg">Jami zarur mahsulot:</div>
+                  <div id="calcResultKg" class="text-3xl sm:text-4xl font-black text-white">473 kg</div>
+                </div>
+
+                <div>
+                  <div class="text-xs text-slate-400" data-i18n="calcTotalBags">Tavsiya etiladigan qoplar soni:</div>
+                  <div id="calcResultBags" class="text-4xl sm:text-5xl font-black text-amber-400">19 qop</div>
+                </div>
+              </div>
+
+              <p class="text-[11px] text-slate-400" data-i18n="calcReserveNote">
+                * 5% zaxira bilan hisoblangan. Qop hajmi mahsulot turiga bog'liq.
+              </p>
+
+              <button onclick="handleCalcOrder()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs sm:text-sm font-extrabold shadow-lg shadow-red-600/30 transition-all uppercase tracking-wider">
+                <span data-i18n="calcOrderCalcBtn">Ushbu hajmda arizani rasmiylashtirish</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       AFZALLIKLAR SEKSIYASI
+       ===================================================================== -->
+  <section id="advantages" class="py-16 lg:py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-black uppercase tracking-widest text-red-600 bg-red-50 border border-red-200 px-3.5 py-1 rounded-full" data-i18n="advTag">
+          NEGA AYNAN BIZ?
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 tracking-tight" data-i18n="advTitle">
+          XON SAROYning 4 Ta Ustun Afzalligi
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- 1 -->
+        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+          <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl font-black mb-6">
+            🇹🇷
+          </div>
+          <h3 class="text-lg font-black text-slate-900" data-i18n="adv1Title">Turkiya Texnologiyasi</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed" data-i18n="adv1Desc">
+            Yevropa standartlariga javob beruvchi maxsus polimer qo'shimchalar va retseptura.
+          </p>
+        </div>
+
+        <!-- 2 -->
+        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+          <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-black mb-6">
+            🔬
+          </div>
+          <h3 class="text-lg font-black text-slate-900" data-i18n="adv2Title">Laboratoriya Nazorati</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed" data-i18n="adv2Desc">
+            Har bir partiya fabrikamizdagi zamonaviy laboratoriyada mustahkamlik va elastiklikka tekshiriladi.
+          </p>
+        </div>
+
+        <!-- 3 -->
+        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl font-black mb-6">
+            ⚡
+          </div>
+          <h3 class="text-lg font-black text-slate-900" data-i18n="adv3Title">Ustalarga Qulaylik</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed" data-i18n="adv3Desc">
+            Aralashmaning mayinligi, oson tortilishi va silliqlanishi ustalar mehnatini 2 barobar yengillashtiradi.
+          </p>
+        </div>
+
+        <!-- 4 -->
+        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl font-black mb-6">
+            🚛
+          </div>
+          <h3 class="text-lg font-black text-slate-900" data-i18n="adv4Title">Ulgurji Narxlar & Yetkazish</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed" data-i18n="adv4Desc">
+            To'g'ridan-to'g'ri ishlab chiqaruvchidan birinchi qo'l narxlar va barcha hududlarga tez yetkazish.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       BUYURTMA VA TELEGRAM BOT FORMASI (LEAD GENERATION)
+       ===================================================================== -->
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-b from-slate-50 to-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-xl">
+        
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="text-xs font-black uppercase tracking-widest text-red-600 bg-red-100/60 px-3.5 py-1 rounded-full" data-i18n="leadTag">
+            BUYURTMA VA HAMKORLIK
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-3" data-i18n="leadTitle">
+            Ulgurji Xaridorlar va Ustalar Uchun Ariza
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-2" data-i18n="leadDesc">
+            Telefon raqamingizni qoldiring, 10 daqiqa ichida mutaxassisimiz siz bilan bog'lanib, eng qulay narxlar va yetkazib berish shartlarini taqdim etadi.
+          </p>
+        </div>
+
+        <form id="leadOrderForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Ism -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formName">Ismingiz yoki Kompaniya nomi</label>
+              <input type="text" id="orderName" required placeholder="Masalan: Sardor Aliyev" data-i18n-placeholder="formName" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition" />
+            </div>
+
+            <!-- Telefon -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formPhone">Telefon raqamingiz</label>
+              <input type="tel" id="orderPhone" required value="+998 " placeholder="+998 90 123-45-67" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition font-mono" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Mahsulot -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formProduct">Qiziqtirgan mahsulot</label>
+              <select id="orderProductSelect" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600 transition">
+                <option value="general" data-i18n="formProductGeneral">Umumiy konsultatsiya / Bir nechta mahsulot</option>
+              </select>
+            </div>
+
+            <!-- Hajm -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formQuantity">Taxminiy hajm (qop yoki tonna)</label>
+              <input type="text" id="orderQuantity" placeholder="Masalan: 50 qop yoki 2 tonna" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600 transition" />
+            </div>
+          </div>
+
+          <!-- Izoh / Manzil -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formNote">Yetkazib berish manzili yoki qo'shimcha izoh</label>
+            <textarea id="orderNote" rows="2" placeholder="Shahar, tuman yoki ob'ekt manzili..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600 transition"></textarea>
+          </div>
+
+          <!-- Telegram bildirishnoma eslatmasi -->
+          <div class="flex items-center gap-2 text-xs text-slate-500 bg-sky-50 text-sky-800 p-3 rounded-xl border border-sky-100">
+            <svg class="w-4 h-4 text-sky-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <span data-i18n="formTelegramNote">Arizangiz to'g'ridan-to'g'ri Telegram orqali mutaxassisimizga yuboriladi.</span>
+          </div>
+
+          <!-- Yuborish tugmasi -->
+          <button type="submit" id="orderSubmitBtn" class="w-full py-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black text-sm uppercase tracking-wider shadow-lg shadow-red-600/30 hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            <span data-i18n="formSubmit">Arizani jo'natish</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       ALOQA VA MANZIL SEKSIYASI (Chirchiq shahri va Xarita)
+       ===================================================================== -->
+  <section id="contact" class="py-16 lg:py-24 bg-slate-900 text-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Chap: Manzil va Kontaktlar -->
+        <div class="lg:col-span-5 space-y-6">
+          <div>
+            <span class="text-xs font-black uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3.5 py-1 rounded-full" data-i18n="contactTag">
+              ALOQA VA MANZIL
+            </span>
+            <h2 class="text-3xl font-black text-white mt-3" data-i18n="contactTitle">
+              Fabrika va Savdo Bo'limi Bilan Bog'laning
+            </h2>
+            <p class="text-slate-400 text-sm mt-1" data-i18n="contactDesc">
+              Kompaniyamizning ishlab chiqarish korxonasi va bosh ombori Chirchiq shahrida joylashgan.
+            </p>
+          </div>
+
+          <!-- Aloqa bloklari -->
+          <div class="space-y-4 pt-2">
+            <!-- Manzil -->
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-red-600/20 text-red-500 flex items-center justify-center text-xl shrink-0">
+                📍
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-i18n="addressTitle">Ishlab chiqarish manzili:</h4>
+                <p class="text-sm font-semibold text-white mt-0.5" data-i18n="addressVal">
+                  Toshkent viloyati, Chirchiq shahri, V.Haydarov ko'chasi 31/13
+                </p>
+              </div>
+            </div>
+
+            <!-- Telefonlar -->
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center text-xl shrink-0">
+                📞
+              </div>
+              <div class="space-y-1">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-i18n="phonesTitle">Savdo bo'limi telefonlari:</h4>
+                <div class="flex flex-col gap-1">
+                  <a href="tel:+998904270010" class="text-sm font-bold text-amber-300 hover:underline">+998 (90) 427-00-10</a>
+                  <a href="tel:+998994280010" class="text-sm font-bold text-amber-300 hover:underline">+998 (99) 428-00-10</a>
+                  <a href="tel:+998994290010" class="text-sm font-bold text-amber-300 hover:underline">+998 (99) 429-00-10</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ish vaqti -->
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl shrink-0">
+                ⏰
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-i18n="workHoursTitle">Ish vaqti:</h4>
+                <p class="text-xs text-slate-300 mt-0.5" data-i18n="workHoursVal">
+                  Dushanba - Shanba: 08:30 - 18:30 (Yakshanba: Dam olish)
+                </p>
+              </div>
+            </div>
+
+            <!-- Telegram Admin -->
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl shrink-0">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Telegram Admin:</h4>
+                <a href="https://t.me/dilshod_otaxonov" target="_blank" class="text-sm font-bold text-sky-400 hover:text-sky-300 transition flex items-center gap-1.5 mt-0.5">
+                  <span>@dilshod_otaxonov</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- O'ng: Chirchiq Xaritasi (Interactive Map / Yandex Maps Frame) -->
+        <div class="lg:col-span-7">
+          <div class="bg-white/5 p-3 rounded-3xl border border-white/10 shadow-2xl">
+            <div class="flex items-center justify-between px-3 py-2 text-xs text-slate-400">
+              <span class="font-bold flex items-center gap-1.5 text-white" data-i18n="mapTitle">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                Chirchiq shahridagi xaritamiz:
+              </span>
+              <span>V.Haydarov ko'chasi 31/13</span>
+            </div>
+
+            <!-- Xarita iframi / Chirchiq koordinatalari -->
+            <div class="relative w-full h-[380px] rounded-2xl overflow-hidden bg-slate-800">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47854.265743497985!2d69.54460599999999!3d41.4687588!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aef72c470876cf%3A0x63351ec12cb65ff9!2sChirchiq%2C%20Tashkent%20Region!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                class="filter contrast-125">
+              </iframe>
+              
+              <!-- Xarita ustidagi info-kartochka -->
+              <div class="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs bg-slate-950/90 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-xl text-xs">
+                <div class="font-black text-amber-300">XON SAROY Ishlab chiqarish majmuasi</div>
+                <div class="text-slate-300 mt-1">Chirchiq sh., V.Haydarov ko'chasi 31/13</div>
+                <div class="mt-2 flex gap-2">
+                  <a href="https://yandex.uz/maps/?text=Chirchiq+V.Haydarov+31" target="_blank" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded font-bold transition">
+                    Yandex Xaritada ochish
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       FOOTER (PODVAL)
+       ===================================================================== -->
+  <footer class="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
+        
+        <!-- Brand info -->
+        <div class="md:col-span-5 space-y-3">
+          <div class="flex items-center gap-3 text-white">
+            <img src="assets/images/logo.jpg" alt="XON SAROY" class="w-12 h-12 rounded-xl object-cover shadow-lg border border-amber-400/50">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-serif font-black text-xl text-white tracking-wide">XON SAROY</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-amber-400 text-slate-950 uppercase">PRO</span>
+              </div>
+              <p class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Quruq Qurilish Aralashmalari</p>
+            </div>
+          </div>
+          <p class="text-slate-400 text-xs max-w-sm leading-relaxed" data-i18n="footerDev">
+            Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan yuqori sifatli quruq qorishmalar.
+          </p>
+          <div class="flex items-center gap-2 pt-2">
+            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-400 font-mono text-[11px]">TSE EN / GOST</span>
+            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300 text-[11px]">ISO 9001:2015</span>
+          </div>
+        </div>
+
+        <!-- Havolalar -->
+        <div class="md:col-span-3 space-y-2">
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider" data-i18n="footerFastLinks">Tezkor havolalar</h4>
+          <ul class="space-y-1.5">
+            <li><a href="#home" class="hover:text-white transition">Bosh sahifa</a></li>
+            <li><a href="#catalog" class="hover:text-white transition">Mahsulotlar katalogi</a></li>
+            <li><a href="#bonus" class="hover:text-amber-400 transition">Ustalar aksiyasi va sovrinlar</a></li>
+            <li><a href="#calculator" class="hover:text-white transition">Material sarfi kalkulyatori</a></li>
+            <li><a href="#contact" class="hover:text-white transition">Manzil va aloqa</a></li>
+          </ul>
+        </div>
+
+        <!-- Telefonlar -->
+        <div class="md:col-span-4 space-y-2">
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider" data-i18n="footerContacts">Bog'lanish</h4>
+          <p class="text-slate-300 font-semibold" data-i18n="footerHotline">Yagona aloqa markazi:</p>
+          <div class="space-y-1 font-mono text-sm text-amber-400 font-bold">
+            <div><a href="tel:+998904270010" class="hover:underline">+998 90 427-00-10</a></div>
+            <div><a href="tel:+998994280010" class="hover:underline">+998 99 428-00-10</a></div>
+            <div><a href="tel:+998994290010" class="hover:underline">+998 99 429-00-10</a></div>
+          </div>
+          <div class="pt-1.5 flex items-center gap-1.5 text-sky-400 font-semibold">
+            <span>Telegram:</span>
+            <a href="https://t.me/dilshod_otaxonov" target="_blank" class="hover:underline">@dilshod_otaxonov</a>
+          </div>
+          <p class="text-[11px] text-slate-500 pt-2">Chirchiq sh., V.Haydarov ko'chasi 31/13</p>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <div>
+          © 2026 XON SAROY. <span data-i18n="footerRights">Barcha huquqlar himoyalangan.</span>
+        </div>
+        <div>
+          Megamix.uz standartlari asosida yaratilgan korporativ katalog tizimi.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       INTERAKTIV MAHSULOT MODALI (SINGLE PRODUCT MODAL / PASPORT)
+       ===================================================================== -->
+  <div id="productModal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop bg-slate-950/70 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+    <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-slate-200 transform transition-all my-8" id="productModalContent">
+      <!-- JavaScript openProductModal() orqali to'ldiriladi -->
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       BUYURTMA MODALI (ORDER MODAL)
+       ===================================================================== -->
+  <div id="orderModal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop bg-slate-950/70 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center font-bold">XS</div>
+          <h3 class="text-lg font-black text-slate-900" data-i18n="leadTitle">Tezkor Buyurtma / Ariza</h3>
+        </div>
+        <button onclick="closeOrderModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-500 mt-3" data-i18n="leadDesc">
+        Telefon raqamingizni qoldiring, 10 daqiqa ichida mutaxassisimiz siz bilan bog'lanadi.
+      </p>
+
+      <form onsubmit="handleOrderFormSubmit(event)" class="space-y-4 mt-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formName">Ismingiz</label>
+          <input type="text" id="modalOrderName" required placeholder="Sardor Aliyev" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-red-600" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="formPhone">Telefon raqamingiz</label>
+          <input type="tel" id="modalOrderPhone" required value="+998 " class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-red-600" />
+        </div>
+
+        <div>
+          <button type="submit" class="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm uppercase tracking-wider shadow-lg shadow-red-600/30 transition">
+            <span data-i18n="formSubmit">Arizani jo'natish</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MUVAFFAQIYATLI YUBORILDI MODALI (SUCCESS MODAL)
+       ===================================================================== -->
+  <div id="orderSuccessModal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop bg-slate-950/70 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-slate-200 text-center space-y-4">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
+        ✓
+      </div>
+      <h3 class="text-2xl font-black text-slate-900" data-i18n="formSuccessTitle">
+        Arizangiz muvaffaqiyatli qabul qilindi!
+      </h3>
+      <p class="text-sm text-slate-600" data-i18n="formSuccessDesc">
+        Tez orada mutaxassisimiz siz bilan bog'lanadi. XON SAROY brendini tanlaganingiz uchun tashakkur!
+      </p>
+
+      <div class="pt-4 flex flex-col gap-2">
+        <a href="https://t.me/dilshod_otaxonov" target="_blank" class="w-full py-3 px-4 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold transition flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z"/></svg>
+          <span data-i18n="formFallbackBtn">Telegram orqali to'g'ridan-to'g'ri yozish</span>
+        </a>
+
+        <button onclick="closeSuccessModal()" class="w-full py-3 px-4 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition" data-i18n="modalClose">
+          Yopish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       USTALAR AKSIYASI TAFSILOTLARI MODALI (BONUS MODAL)
+       ===================================================================== -->
+  <div id="bonusModal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop bg-slate-950/70 p-4 flex items-center justify-center">
+    <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-amber-500/40 text-white relative my-8">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🎁</span>
+          <h3 class="text-xl font-black text-amber-300">Ustalar Uchun Maxsus BONUS Aksiya</h3>
+        </div>
+        <button onclick="closeBonusModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="space-y-6 mt-6">
+        <!-- Qanday qatnashiladi -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-3">Qanday ishtirok etish mumkin?</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-slate-800 border border-slate-700">
+              <span class="font-extrabold text-amber-400 block text-base mb-1">1-Qadam</span>
+              XON SAROY qoplaridan birini xarid qiling.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-800 border border-slate-700">
+              <span class="font-extrabold text-amber-400 block text-base mb-1">2-Qadam</span>
+              Qop ichidagi himoyalangan stikerdan maxfiy kodni toping.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-800 border border-slate-700">
+              <span class="font-extrabold text-amber-400 block text-base mb-1">3-Qadam</span>
+              Telegram botimizga kodni yuborib, sovg'angizni oling!
+            </div>
+          </div>
+        </div>
+
+        <!-- Sovrin jamg'armasi -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-white mb-2">Bosh Sovrinlar Jamg'armasi:</h4>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">🥇 1-O'rin:</span> Chevrolet Tracker / Onix avtomobili
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">🥈 2-O'rin:</span> Professional PFT G4 suvoq apparatlari (3 dona)
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">🥉 3-O'rin:</span> iPhone 15 va Samsung Galaxy smartfonlari (20 dona)
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold">★ Kafolatlangan:</span> Har bir stikerda 10 000 so'mdan 500 000 so'mgacha pul yoki usta asboblari!
+            </li>
+          </ul>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row gap-3">
+          <a href="https://t.me/xonsaroy_bonus_bot" target="_blank" class="flex-1 py-3.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs text-center uppercase tracking-wider transition">
+            Telegram Botda Kodni Kiritish (@xonsaroy_bonus_bot)
+          </a>
+          <button onclick="closeBonusModal()" class="py-3 px-6 rounded-xl border border-slate-700 text-slate-300 text-xs font-bold hover:bg-slate-800 transition">
+            Yopish
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       TELEGRAM BOT API SOZLAMALARI MODALI (ADMIN UCHUN)
+       ===================================================================== -->
+  <div id="telegramSettingsModal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop bg-slate-950/70 p-4 flex items-center justify-center">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-4">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
+          <svg class="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          Telegram Bot API Integratsiyasi
+        </h3>
+        <button onclick="closeTelegramSettingsModal()" class="text-slate-400 hover:text-slate-700 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Saytdan kelgan arizalar to'g'ridan-to'g'ri o'zingizning Telegram guruhingizga tushishi uchun bot token va chat ID ni kiriting.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Telegram Bot Token:</label>
+          <input type="text" id="inputBotToken" placeholder="123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg font-mono focus:border-red-600" />
+          <span class="text-[10px] text-slate-400">@BotFather orqali olingan token</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Guruh yoki Kanal Chat ID:</label>
+          <input type="text" id="inputChatId" placeholder="-1001234567890 yoki @kanal_nomi" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg font-mono focus:border-red-600" />
+          <span class="text-[10px] text-slate-400">@userinfobot orqali guruh ID sini bilib olish mumkin</span>
+        </div>
+      </div>
+
+      <div class="pt-2 flex gap-2">
+        <button onclick="saveTelegramSettings()" class="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition">
+          Saqlash
+        </button>
+        <button onclick="closeTelegramSettingsModal()" class="py-2.5 px-4 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+          Bekor qilish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       SUZUVCHI TEZKOR ALOQA TUGMALARI (FLOATING CTA)
+       ===================================================================== -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+    <!-- Qo'ng'iroq qilish -->
+    <a href="tel:+998904270010" title="Qo'ng'iroq qilish: +998 90 427-00-10" class="floating-contact-btn w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"></path></svg>
+    </a>
+
+    <!-- Telegram orqali yozish -->
+    <a href="https://t.me/dilshod_otaxonov" target="_blank" title="Telegram menejer: @dilshod_otaxonov" class="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
+      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z"/></svg>
+    </a>
+  </div>
+
+  <!-- JavaScript Ma'lumotlar va Ilova skriptlari -->
+  <script src="js/data.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+# "XON SAROY" — Quruq Qurilish Aralashmalari Korporativ Katalog Sayti
+
+> **Shior:** Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan.  
+> **Uslub:** Megamix.uz darajasidagi premium, zamonaviy va mobil qurilmalarga to'liq moslashgan korporativ katalog.
+
+---
+
+## 📌 Loyiha Tarkibi va Imkoniyatlari
+
+1. **Header va Brendlash**:
+   - XON SAROY brend logotipi va Turkiya texnologiyasi nishoni
+   - Tezkor aloqa telefonlari (+998 90 427-00-10, +998 99 428-00-10, +998 99 429-00-10)
+   - Ikki tilli tizim (**UZ** / **RU**) — sahifani qayta yuklamasdan lahzada almashtirish
+   - "Ariza qoldirish" tezkor tugmasi
+
+2. **Hero Banner**:
+   - Megamix uslubidagi qudratli taqdimot, 3D qop vizuali va sifat kafolati statistikasi
+   - "Ustalar uchun maxsus BONUS" aksiyasiga to'g'ridan-to'g'ri o'tish
+
+3. **Ustalar Uchun Maxsus BONUS (Aksiya Bloki)**:
+   - "Qop ichidan stikerni toping va sovg'alarni yutib oling!"
+   - Bosh sovrinlar: Tracker/Onix avtomobili, PFT G4 suvoq stantsiyalari, smartfonlar va kafolatlangan pul mukofotlari
+   - Aksiya shartlari va Telegram bot orqali kodni faollashtirish bo'yicha interaktiv modal oyna
+
+4. **11 Ta Mahsulotning To'liq Katalogi**:
+   - **Gips va Polimer Shpaklyovkalar**:
+     * `SILK POLY 20 / SILK` (Satin gips) — 20/25 kg
+     * `GLATT 05` (Gipsli pardoz shpaklyovkasi) — 25 kg
+     * `Cover` (Fasad shpaklyovkasi) — 20 kg
+     * `FleXon` (Chok va lepka uchun) — 20 kg
+   - **Shtukaturka va Suvoqlar**:
+     * `DOMINANT` (Universal gips suvoq) — 25 kg
+     * `DOMINANT-SP` (Mashinada surtiluvchi gips suvoq) — 30 kg
+     * `ARMOR` (Sementli armirlangan fasad suvoq) — 25 kg
+   - **Yelimlar va Gidroizolyatsiya**:
+     * `INFINITY` (Kuchaytirilgan kafel yelimi C1TE) — 25 kg
+     * `BlockFix` (Gazobeton yelimi) — 25 kg
+     * `HYDRO 255` (2 komponentli elastik gidroizolyatsiya) — 25 kg
+   - **Quyma Pol**:
+     * `LEVEL` (O'z-o'zidan tebranuvchi va silliqlanuvchi pol aralashmasi) — 25 kg
+
+5. **Interaktiv Mahsulot Modali (Mahsulot Pasporti)**:
+   - Qop tasviri va vazni
+   - Qo'llanilish sohasi va afzalliklari
+   - To'liq laboratoriya texnik ko'rsatkichlari (suv nisbati, sarfi, qotish vaqti, qatlam qalinligi, ish harorati, saqlash muddati, GOST/TSE standartlari)
+   - **PDF yo'riqnomani yuklab olish / Chop etish** tugmasi
+   - "Shu mahsulotga buyurtma berish" tugmasi
+
+6. **Ustalar Uchun Quruq Qorishma Sarfi Kalkulyatori**:
+   - Mahsulotni tanlash, maydon (m²) va qalinlikni (mm) kiritish
+   - 5% zaxira bilan jami zarur kilogramm va qoplar sonini lahzada hisoblash
+   - Hisoblangan hajmda arizani rasmiylashtirish
+
+7. **Telegram Bot API Integratsiyalashgan Ariza Formasi**:
+   - Ism, telefon, mahsulot, hajm va manzil
+   - Saytdagi barcha arizalar kompaniyaning Telegram botiga darhol xabar bo'lib tushadi
+   - Saytning o'zida qulay sozlash interfeysi mavjud ("Bot API" tugmasi)
+
+8. **Chirchiq Shahridagi Manzil va Xarita**:
+   - Toshkent viloyati, Chirchiq shahri, V.Haydarov ko'chasi 31/13
+   - Interaktiv xarita va to'g'ridan-to'g'ri qo'ng'iroq qilish imkoniyati
+
+---
+
+## 🚀 Ishga Tushirish (Zero-Dependency)
+
+Loyiha sof HTML5, Tailwind CSS va zamonaviy Vanilla JavaScript arxitekturasida yaratilgan. Hech qanday `npm install` yoki `node` o'rnatish talab qilinmaydi!
+
+1. Papkaga kiring:
+   ```
+   C:\Users\delux\.gemini\antigravity\scratch\xon-saroy-catalog
+   ```
+2. `index.html` faylini istalgan brauzerda (Google Chrome, Edge, Safari, Firefox) oching.
+3. Windows PowerShell orqali ishga tushirish:
+   ```powershell
+   Start-Process index.html
+   ```
+
+---
+
+## 🤖 Telegram Bot Integratsiyasini Sozlash
+
+Saytdan arizalar sizning Telegram guruhingizga tushishi uchun:
+
+1. Telegramda [@BotFather](https://t.me/BotFather) botiga kiring va `/newbot` buyrug'i orqali yangi bot ochib, uning **Token**ini oling (masalan: `7891234567:AAExampleToken...`).
+2. Arizalar kelib tushishi kerak bo'lgan Telegram guruh yoki kanal yarating va botingizni o'sha guruhga admin qilib qo'shing.
+3. Guruhning **Chat ID** sini bilish uchun [@userinfobot](https://t.me/userinfobot) botini guruhga qo'shing yoki `https://api.telegram.org/bot<TOKEN>/getUpdates` havolasini brauzerda oching. Guruh ID lari odatda `-100...` bilan boshlanadi.
+4. Saytning yuqori o'ng burchagidagi **"Bot API"** tugmasini bosing:
+   - `Telegram Bot Token` maydoniga tokeningizni kiriting.
+   - `Guruh Chat ID` maydoniga chat ID ni kiriting.
+   - **"Saqlash"** tugmasini bosing.
+5. Endi saytdan yuborilgan har bir ariza darhol sizning Telegramingizga chiroyli formatlangan holda kelib tushadi!
+
+---
+
+## 🌐 Serverga Joylashtirish (Hosting)
+
+Ushbu static saytni 1 daqiqada bepul internetga yuklash mumkin:
+- **Vercel**: Papkani `vercel deploy` orqali yoki Vercel veb-interfeysiga tortib tashlash orqali.
+- **Netlify**: Papkani `netlify.com/drop` sahifasiga tashlash kifoya.
+- **cPanel / Apache / Nginx**: `public_html` papkasiga barcha fayllarni ko'chirish kifoya.
+
+---
+
+## 🛠️ CMS (Admin Panel) Integratsiyasi Bo'yicha Tavsiyalar
+
+Agar kelajakda mahsulotlar soni va narxlarni boshqarish uchun backend panel kerak bo'lsa:
+1. **Strapi (Headless CMS)**:
+   - Mahsulotlar uchun `Product` kolleksiyasini yaratib, REST API orqali `js/data.js` o'rniga `fetch('https://api.xonsaroy.uz/api/products')` orqali ma'lumot olish mumkin.
+2. **WordPress (WooCommerce / Custom Post Type)**:
+   - WordPress REST API orqali integratsiya qilish.
+3. **Laravel API**:
+   - Katta hajmdagi ombor qoldiqlari, CRM va buyurtmalar hisobi uchun eng maqbul yechim.
+
+$port = 8080
+$root = "C:\Users\delux\.gemini\antigravity\scratch\xon-saroy-catalog"
+$listener = New-Object System.Net.HttpListener
+$listener.Prefixes.Add("http://localhost:$port/")
+
+try {
+    $listener.Start()
+    Write-Host "XON SAROY server running at http://localhost:$port/"
+    while ($listener.IsListening) {
+        $context = $listener.GetContext()
+        $request = $context.Request
+        $response = $context.Response
+
+        $relPath = $request.Url.LocalPath.TrimStart('/')
+        if ([string]::IsNullOrWhiteSpace($relPath)) {
+            $relPath = "index.html"
+        }
+        $filePath = Join-Path $root $relPath
+
+        if (Test-Path $filePath -PathType Leaf) {
+            $bytes = [System.IO.File]::ReadAllBytes($filePath)
+            $ext = [System.IO.Path]::GetExtension($filePath).ToLower()
+            switch ($ext) {
+                ".html" { $response.ContentType = "text/html; charset=utf-8" }
+                ".css"  { $response.ContentType = "text/css; charset=utf-8" }
+                ".js"   { $response.ContentType = "application/javascript; charset=utf-8" }
+                ".json" { $response.ContentType = "application/json" }
+                ".svg"  { $response.ContentType = "image/svg+xml" }
+                ".png"  { $response.ContentType = "image/png" }
+                ".jpg"  { $response.ContentType = "image/jpeg" }
+                default { $response.ContentType = "application/octet-stream" }
+            }
+            $response.ContentLength64 = $bytes.Length
+            $response.OutputStream.Write($bytes, 0, $bytes.Length)
+        } else {
+            $response.StatusCode = 404
+            $errBytes = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
+            $response.ContentLength64 = $errBytes.Length
+            $response.OutputStream.Write($errBytes, 0, $errBytes.Length)
+        }
+        $response.OutputStream.Close()
+    }
+} catch {
+    Write-Error $_
+} finally {
+    $listener.Stop()
+}
