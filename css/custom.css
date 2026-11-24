@@ -1,211 +1,403 @@
 /* ==========================================================================
-   XON SAROY - INFINITY Qopi Dizayni va Megamix Uslubidagi 3D/2D Effektlar
-   11 ta rangli tasmalar va yorug'lik (Glow) effektlari
+   XON SAROY - Oxford Blue Korporativ Dizayn (100% Standart Arxitektura)
    ========================================================================== */
 
 :root {
+  --blue-gray: #6699CC;
+  --blue-gray-dark: #4F82B7;
+  --blue-gray-light: #7EAFDE;
+  --oxford-blue: #002147;
+  --oxford-blue-dark: #001733;
+  --oxford-blue-light: #062b59;
   --xon-red: #C8102E;
-  --xon-red-dark: #A00B22;
-  --xon-blue: #0F2C59;
-  --xon-blue-dark: #081B38;
   --xon-gold: #D97706;
-  --xon-gold-light: #F59E0B;
-  --xon-gray-bg: #F8FAFC;
-  --xon-border: #E2E8F0;
+  --brand-blue: #0055A5;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-/* Gradientlar */
-.bg-gradient-xon {
-  background: linear-gradient(135deg, #0F2C59 0%, #1E3A8A 50%, #081B38 100%);
-}
-
-.bg-gradient-red {
-  background: linear-gradient(135deg, #C8102E 0%, #991B1B 100%);
-}
-
-.bg-gradient-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-}
-
-.text-gold {
-  color: #F59E0B;
+  font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  color: #1E293B;
+  background-color: #FFFFFF;
 }
 
 /* ==========================================================================
-   XON SAROY INFINITY QOP MOCKUP EFFEKTLARI
+   1. HEADER VA OSILGAN OQ LOGOTIP KARTASI (Hanging Logo Card)
    ========================================================================== */
 
-/* 2D/3D Qop Asosiy Konteyneri */
+.hanging-logo-card {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 170px;
+  background: #FFFFFF;
+  padding: 1.25rem 1rem 1.5rem 1rem;
+  box-shadow: 0 18px 40px -5px rgba(0, 30, 60, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-top: none;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .hanging-logo-card {
+    left: 4rem;
+    width: 200px;
+    padding: 1.5rem 1.25rem 1.75rem 1.25rem;
+  }
+}
+
+.hanging-logo-card:hover {
+  box-shadow: 0 25px 50px -5px rgba(0, 30, 60, 0.45);
+}
+
+/* ==========================================================================
+   ALOHIDA OYNALAR (PAGES / VIEWS) ARXITEKTURASI
+   ========================================================================== */
+.site-page-view {
+  display: none;
+}
+.site-page-view.active-view {
+  display: block;
+  animation: pageFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes pageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navigatsiya havolalari va faol chiziq (moviy fonga mos) */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 0;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2.5px;
+  background-color: #FEF08A;
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #FEF08A;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Dropdown ochiluvchi menyu */
+.nav-item-dropdown {
+  position: relative;
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 0.6rem;
+  min-width: 220px;
+  z-index: 50;
+}
+
+.nav-item-dropdown:hover .nav-dropdown,
+.nav-item-dropdown:focus-within .nav-dropdown {
+  display: block;
+}
+
+.nav-dropdown-content {
+  background: #FFFFFF;
+  color: #1E293B;
+  border-radius: 8px;
+  box-shadow: 0 20px 45px -5px rgba(0, 30, 60, 0.3);
+  border: 1px solid #E2E8F0;
+  padding: 0.5rem 0;
+}
+
+.nav-dropdown-item {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.nav-dropdown-item:hover {
+  background: #F8FAFC;
+  color: #C8102E;
+  padding-left: 1.5rem;
+}
+
+/* ==========================================================================
+   2. #6699CC BLUE-GRAY HERO SLIDER VA CHETKI STRELKALAR
+   ========================================================================== */
+
+.hero-bluegray {
+  position: relative;
+  background-color: #6699CC !important;
+  background: #6699CC linear-gradient(145deg, #4F82B7 0%, #6699CC 50%, #7EAFDE 100%) !important;
+  color: #FFFFFF;
+  min-height: 580px;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .hero-bluegray {
+    min-height: 660px;
+  }
+}
+
+.hero-white {
+  position: relative;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  color: #1E293B;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.hero-oxford {
+  position: relative;
+  background-color: #002147 !important;
+  background: #002147 linear-gradient(135deg, #001733 0%, #002147 60%, #062b59 100%) !important;
+  color: #FFFFFF;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+/* Ikkala chetdagi o'ng va chap strelkalar (#6699CC fonga mos oq kapsula) */
+.hero-edge-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: all 0.25s ease;
+  padding: 1.25rem 0.65rem;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px rgba(0, 30, 60, 0.2);
+}
+
+.hero-edge-arrow:hover {
+  color: #1E3A8A;
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  box-shadow: 0 12px 30px rgba(0, 30, 60, 0.35);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero-edge-arrow.left {
+  left: 0.75rem;
+}
+
+.hero-edge-arrow.right {
+  right: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .hero-edge-arrow.left {
+    left: 1.5rem;
+  }
+  .hero-edge-arrow.right {
+    right: 1.5rem;
+  }
+}
+
+/* Pastki slayd nuqtalari (Pagination Dots) */
+.hero-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.85);
+  transform: scale(1.35);
+}
+
+/* Hero 3D Qoplar vitrinasi */
+.hero-bags-display {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  min-height: 420px;
+}
+
+@media (min-width: 1024px) {
+  .hero-bags-display {
+    min-height: 520px;
+  }
+}
+
+/* Shaffof qoplar uchun TINICHI VA YUQORI SIFATLI 3D SOYA (Sharpness & Realism) */
+.hero-bag-main {
+  filter: drop-shadow(0 25px 35px rgba(15, 35, 65, 0.55)) drop-shadow(0 10px 15px rgba(15, 35, 65, 0.3));
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), filter 0.4s ease;
+  user-select: none;
+}
+
+.hero-bag-main:hover {
+  transform: scale(1.06) translateY(-8px);
+  filter: drop-shadow(0 35px 50px rgba(15, 35, 65, 0.65)) drop-shadow(0 15px 20px rgba(15, 35, 65, 0.35));
+}
+
+.hero-bag-side {
+  filter: drop-shadow(0 18px 25px rgba(15, 35, 65, 0.45));
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), filter 0.4s ease;
+  opacity: 0.95;
+  user-select: none;
+}
+
+.hero-bag-side:hover {
+  transform: scale(1.03) translateY(-4px);
+  opacity: 1;
+  filter: drop-shadow(0 25px 35px rgba(15, 35, 65, 0.55));
+}
+
+/* Slayd animatsiyasi */
+.hero-slide {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.hero-slide.hidden-slide {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  transform: translateX(40px);
+}
+
+.hero-slide.active-slide {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   3. 4 TA ASOSIY AFZALLIK KARTALARI
+   ========================================================================== */
+
+.adv-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.adv-box:hover {
+  border-color: #002147;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px -10px rgba(0, 33, 71, 0.15);
+}
+
+/* ==========================================================================
+   4. KATTA 3D QOPLAR VA GORIZONTAL SLAYDER
+   ========================================================================== */
+
+.bag-card {
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+}
+
+.bag-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 35px -10px rgba(0, 33, 71, 0.14);
+  border-color: #CBD5E1;
+}
+
+/* Kategoriya filtr tugmalari */
+.filter-btn {
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.filter-btn.active {
+  background-color: #002147 !important;
+  color: #FFFFFF !important;
+  border-color: #002147 !important;
+  box-shadow: 0 4px 14px -2px rgba(0, 33, 71, 0.4);
+}
+
 .bag-2d-container {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  filter: drop-shadow(0 16px 24px rgba(15, 23, 42, 0.16)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.06));
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
-  will-change: transform, filter;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.15));
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), filter 0.35s ease;
   cursor: pointer;
 }
 
-/* Sichqoncha olib borilganda (Hover): 3D ko'tarilish */
 .bag-card:hover .bag-2d-container {
-  transform: translateY(-14px) scale(1.035) rotate(-0.5deg);
+  transform: translateY(-8px) scale(1.025);
+  filter: drop-shadow(0 26px 36px rgba(0, 33, 71, 0.22));
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ==========================================================================
-   BARCHA 11 TA MAHSULOT UCHUN YORUG'LIK (GLOWING) EFFEKTLARI
+   5. MODAL OYNALAR
    ========================================================================== */
 
-/* 1. INFINITY — Binafsha (Purple) */
-.glow-purple:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(124, 58, 237, 0.35)) 
-          drop-shadow(0 0 26px rgba(124, 58, 237, 0.52));
-}
-
-/* 2. BlockFix — To'q kulrang (Dark Grey) */
-.glow-darkgrey:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(75, 85, 99, 0.4)) 
-          drop-shadow(0 0 26px rgba(107, 114, 128, 0.48));
-}
-
-/* 3. SILK POLY 20 — Havorang/Ko'k (Cyan) */
-.glow-cyan:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(2, 132, 199, 0.35)) 
-          drop-shadow(0 0 26px rgba(14, 165, 233, 0.52));
-}
-
-/* 4. GLATT 05 — Och ko'k (Light Blue) */
-.glow-lightblue:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(56, 189, 248, 0.38)) 
-          drop-shadow(0 0 26px rgba(56, 189, 248, 0.55));
-}
-
-/* 5. Cover — Yashil (Green) */
-.glow-green:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(22, 163, 74, 0.35)) 
-          drop-shadow(0 0 26px rgba(34, 197, 94, 0.52));
-}
-
-/* 6. FleXon — Pushti/Siyohrang (Pink/Magenta) */
-.glow-magenta:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(219, 39, 119, 0.35)) 
-          drop-shadow(0 0 26px rgba(236, 72, 153, 0.52));
-}
-
-/* 7. DOMINANT — Qizil (Red) */
-.glow-red:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(220, 38, 38, 0.35)) 
-          drop-shadow(0 0 26px rgba(239, 68, 68, 0.52));
-}
-
-/* 8. DOMINANT-SP — Olovrang/Zargaldoq (Orange) */
-.glow-orange:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(234, 88, 12, 0.35)) 
-          drop-shadow(0 0 26px rgba(249, 115, 22, 0.55));
-}
-
-/* 9. ARMOR — Jigarrang/Qorong'i ko'k (Navy) */
-.glow-navy:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(30, 41, 59, 0.45)) 
-          drop-shadow(0 0 26px rgba(15, 23, 42, 0.58));
-}
-
-/* 10. HYDRO 255 — Dengiz ko'ki (Teal) */
-.glow-teal:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(13, 148, 136, 0.35)) 
-          drop-shadow(0 0 26px rgba(20, 184, 166, 0.52));
-}
-
-/* 11. LEVEL — Sariq/Oltin (Yellow/Gold) */
-.glow-yellow:hover .bag-2d-container {
-  filter: drop-shadow(0 22px 32px rgba(234, 179, 8, 0.35)) 
-          drop-shadow(0 0 26px rgba(250, 204, 21, 0.55));
-}
-
-/* ==========================================================================
-   KARTOCHKALAR VA MATNLAR
-   ========================================================================== */
-
-.bag-card {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.bag-card:hover {
-  box-shadow: 0 20px 35px -10px rgba(15, 44, 89, 0.16), 0 10px 10px -5px rgba(200, 16, 46, 0.04);
-  border-color: #CBD5E1;
-}
-
-/* Yaltiroq Stiker / Bonus nishoni */
-.shimmer-badge {
-  background: linear-gradient(90deg, #F59E0B, #FEF08A, #F59E0B);
-  background-size: 200% auto;
-  animation: shimmer 3s infinite linear;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Interaktiv Filtr tugmalari */
-.filter-btn.active {
-  background-color: #C8102E;
-  color: #FFFFFF;
-  border-color: #C8102E;
-  box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
-}
-
-/* Bosqichli tab va yaltiroq chegara */
-.tech-spec-row:nth-child(even) {
-  background-color: #F8FAFC;
-}
-
-/* Quruq qurilish to'rlari (Background Pattern) */
-.bg-grid-pattern {
-  background-image: radial-gradient(rgba(15, 44, 89, 0.08) 1px, transparent 0);
-  background-size: 24px 24px;
-}
-
-.bg-grid-pattern-dark {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
-  background-size: 24px 24px;
-}
-
-/* Maxsus Modal oynalar */
 .modal-backdrop {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Tezkor suzuvchi aloqa tugmalari */
-.floating-contact-btn {
-  box-shadow: 0 8px 24px rgba(200, 16, 46, 0.35);
-  animation: pulse-ring 2.5s infinite;
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.6);
-  }
-  70% {
-    box-shadow: 0 0 0 16px rgba(200, 16, 46, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0);
-  }
-}
-
-.settings-pill {
-  transition: all 0.2s ease;
-}
-
-/* PDF Chop etish stili (@media print) */
+/* PDF Chop etish */
 @media print {
   body * {
     visibility: hidden;
@@ -227,3 +419,118 @@ html {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   6. SITE HEADER VA FOOTER
+   ========================================================================== */
+
+/* Header */
+header.site-header {
+  background: var(--ccs-navbar, linear-gradient(90deg, #004E98 0%, #005BB5 45%, #01478F 100%)) !important;
+  color: var(--ccs-navbar-text, #FFFFFF) !important;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+#mobileMenu {
+  background: var(--ccs-navbar, #004E98) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Footer To'lqini va Ranglar */
+.site-footer-wave {
+  background: var(--ccs-footer, linear-gradient(180deg, #F0F7FD 0%, #E2EDF8 100%)) !important;
+  transition: background 0.3s ease;
+}
+
+.site-footer-curve {
+  fill: var(--ccs-primary, #004E98) !important;
+  color: var(--ccs-primary, #004E98) !important;
+  transition: fill 0.3s ease, color 0.3s ease;
+}
+
+.footer-arrow {
+  color: var(--ccs-primary, #0055A5) !important;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social-btn {
+  color: var(--ccs-primary, #0055A5) !important;
+  transition: all 0.25s ease;
+}
+
+.footer-social-btn:hover {
+  background-color: var(--ccs-primary, #0055A5) !important;
+  color: #FFFFFF !important;
+}
+
+.contact-icon-badge {
+  background-color: #EBF3FC !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-icon-badge:hover {
+  background-color: var(--ccs-primary, #0055A5) !important;
+}
+
+.footer-brand-svg {
+  color: var(--ccs-primary, #0055A5) !important;
+  transition: color 0.3s ease;
+}
+
+.footer-section-title {
+  color: var(--ccs-primary, #003B73) !important;
+  transition: color 0.3s ease;
+}
+
+.footer-divider {
+  background-color: rgba(var(--ccs-primary-rgb, 0, 85, 165), 0.22) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* ==========================================================================
+   7. KATALOG DIZAYNI (PILLS VA STUDIO KARTALAR)
+   ========================================================================== */
+
+.catalog-filter-pill {
+  background-color: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  color: #374151;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.catalog-filter-pill:hover:not(.active) {
+  border-color: var(--ccs-primary, #0055A5);
+  color: var(--ccs-primary, #0055A5);
+}
+
+.catalog-filter-pill.active {
+  background-color: var(--ccs-button, #0055A5) !important;
+  border-color: var(--ccs-button, #0055A5) !important;
+  color: var(--ccs-button-text, #FFFFFF) !important;
+}
+
+/* Mahsulot kartochkasi */
+.product-studio-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.product-studio-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ccs-primary, #0055A5) !important;
+  box-shadow: 0 16px 24px -8px var(--ccs-primary-glow, rgba(0, 85, 165, 0.25));
+}
+
+.product-studio-card:hover .rounded-full.border {
+  background-color: var(--ccs-primary, #0055A5) !important;
+  border-color: var(--ccs-primary, #0055A5) !important;
+  color: #FFFFFF !important;
+  transform: scale(1.1);
+}
+
+.product-studio-box {
+  background-color: #BCC4CB;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+

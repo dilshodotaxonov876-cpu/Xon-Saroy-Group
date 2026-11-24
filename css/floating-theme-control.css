@@ -1,0 +1,1195 @@
+/* ==========================================================================
+   FLOATING COLOR CONTROL SYSTEM (3240 RANG) - STYLES
+   ========================================================================== */
+
+/* 1. Global CSS Variables Definition and Defaults */
+:root {
+  --ccs-primary: #0055A5;
+  --ccs-secondary: #002147;
+  --ccs-accent: #C8102E;
+  --ccs-bg: #FFFFFF;
+  --ccs-text: #1E293B;
+  --ccs-button: #0055A5;
+  --ccs-button-text: #FFFFFF;
+  --ccs-navbar: linear-gradient(90deg, #004E98 0%, #005BB5 45%, #01478F 100%);
+  --ccs-navbar-text: #FFFFFF;
+  --ccs-card: #FFFFFF;
+  --ccs-card-text: #1E293B;
+  --ccs-border: #E2E8F0;
+  --ccs-footer: linear-gradient(180deg, #F0F7FD 0%, #E2EDF8 100%);
+  --ccs-footer-text: #1E293B;
+  --ccs-gradient: linear-gradient(135deg, #0055A5 0%, #002147 100%);
+  --ccs-primary-rgb: 0, 85, 165;
+  --ccs-primary-glow: rgba(0, 85, 165, 0.25);
+}
+
+html.dark {
+  --ccs-bg: #0B1120;
+  --ccs-text: #F1F5F9;
+  --ccs-card: #1E293B;
+  --ccs-card-text: #F8FAFC;
+  --ccs-border: #334155;
+  --ccs-footer: linear-gradient(180deg, #0F172A 0%, #0B1120 100%);
+  --ccs-footer-text: #F1F5F9;
+  --ccs-primary-glow: rgba(56, 189, 248, 0.25);
+}
+
+/* 2. Seamless Site Styling Hookups */
+body {
+  background-color: var(--ccs-bg) !important;
+  color: var(--ccs-text) !important;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Background (Fon) styling for main sections */
+.site-page-view,
+section.py-16,
+main {
+  background-color: var(--ccs-bg) !important;
+  transition: background-color 0.35s ease;
+}
+
+header.site-header,
+header {
+  background: var(--ccs-navbar) !important;
+  color: var(--ccs-navbar-text) !important;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.site-footer-wave,
+footer {
+  background: var(--ccs-footer) !important;
+  transition: background 0.35s ease;
+}
+
+.site-footer-curve {
+  fill: var(--ccs-primary) !important;
+  color: var(--ccs-primary) !important;
+  transition: fill 0.35s ease, color 0.35s ease;
+}
+
+.footer-arrow,
+.footer-brand-svg {
+  color: var(--ccs-primary) !important;
+}
+
+.footer-social-btn {
+  color: var(--ccs-primary) !important;
+}
+
+.footer-social-btn:hover {
+  background-color: var(--ccs-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Primary buttons and pills */
+button.bg-oxford,
+a.bg-oxford,
+.bg-oxford,
+#mobileOrderBtn,
+.quick-order-btn {
+  background-color: var(--ccs-button) !important;
+  color: var(--ccs-button-text) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.catalog-filter-pill.active {
+  background-color: var(--ccs-button) !important;
+  border-color: var(--ccs-button) !important;
+  color: var(--ccs-button-text) !important;
+}
+
+.catalog-filter-pill:hover:not(.active) {
+  border-color: var(--ccs-primary) !important;
+  color: var(--ccs-primary) !important;
+}
+
+.product-studio-card:hover {
+  border-color: var(--ccs-primary) !important;
+  box-shadow: 0 16px 24px -8px var(--ccs-primary-glow) !important;
+}
+
+.product-studio-card:hover .rounded-full.border {
+  background-color: var(--ccs-primary) !important;
+  border-color: var(--ccs-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Card (Karta) styling for ALL card components in Light and Dark mode */
+.product-studio-card .product-card-body,
+.product-card-body,
+.adv-box,
+.bag-card,
+#productModalContent {
+  background-color: var(--ccs-card) !important;
+  color: var(--ccs-card-text) !important;
+  border-color: var(--ccs-border) !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Border (Chegara) styling in Light and Dark mode */
+.border-slate-100,
+.border-slate-200,
+.border-slate-300,
+.border-slate-200\/80 {
+  border-color: var(--ccs-border) !important;
+  transition: border-color 0.3s ease;
+}
+
+/* Accent (Urg'u) styling */
+.badge-accent,
+.text-xon-red {
+  color: var(--ccs-accent) !important;
+}
+
+/* Dark mode specific background overrides */
+html.dark .bg-white {
+  background-color: var(--ccs-card) !important;
+  color: var(--ccs-card-text) !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-\[\#F6FAFD\],
+html.dark .bg-\[\#F7FAFC\] {
+  background-color: rgba(15, 23, 42, 0.65) !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-oxford {
+  color: #FFFFFF !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-700 {
+  color: #CBD5E1 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94A3B8 !important;
+}
+
+/* ==========================================================================
+   3. FLOATING TRIGGER BUTTON (PALITRA TUGMASI)
+   ========================================================================== */
+
+#ccsFloatingTrigger {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid var(--ccs-primary);
+  color: var(--ccs-primary);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 0 16px var(--ccs-primary-glow);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+}
+
+html.dark #ccsFloatingTrigger {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: var(--ccs-primary);
+  color: #FFFFFF;
+}
+
+#ccsFloatingTrigger:hover {
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.35), 0 0 24px var(--ccs-primary-glow);
+}
+
+#ccsFloatingTrigger.active {
+  transform: translateY(-50%) scale(0.92);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+#ccsFloatingTrigger .ccs-pulse-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--ccs-primary);
+  opacity: 0.4;
+  animation: ccsPulse 2.4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes ccsPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* ==========================================================================
+   4. FLOATING CONTROL PANEL (CLIPPING FIX VA ARXITEKTURA)
+   ========================================================================== */
+
+#ccsFloatingPanel {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.94);
+  width: 356px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 25px 65px -12px rgba(0, 20, 50, 0.38), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.28s ease,
+              background-color 0.35s ease;
+  user-select: none;
+}
+
+#ccsFloatingPanel.open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateY(-50%) scale(1);
+}
+
+html.dark #ccsFloatingPanel {
+  background: rgba(15, 23, 42, 0.94);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
+}
+
+/* Header - ALWAYS VISIBLE, NEVER CLIPS */
+.ccs-header {
+  flex-shrink: 0;
+  padding: 14px 16px 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html.dark .ccs-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.ccs-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ccs-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0F172A;
+}
+
+html.dark .ccs-title {
+  color: #FFFFFF;
+}
+
+.ccs-badge-count {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px var(--ccs-primary-glow);
+}
+
+.ccs-theme-modes {
+  display: flex;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px;
+  border-radius: 12px;
+  gap: 2px;
+}
+
+html.dark .ccs-theme-modes {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ccs-mode-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+html.dark .ccs-mode-btn {
+  color: #94A3B8;
+}
+
+.ccs-mode-btn:hover {
+  color: var(--ccs-primary);
+}
+
+.ccs-mode-btn.active {
+  background: #FFFFFF;
+  color: var(--ccs-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+html.dark .ccs-mode-btn.active {
+  background: #1E293B;
+  color: #38BDF8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ccs-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 4px;
+}
+
+.ccs-close-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #0F172A;
+}
+
+html.dark .ccs-close-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+/* Target Element Bar - ALWAYS VISIBLE, NEVER CLIPS */
+.ccs-target-bar {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.025);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+html.dark .ccs-target-bar {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.ccs-target-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ccs-target-select {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #FFFFFF;
+  color: #1E293B;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+html.dark .ccs-target-select {
+  background: #1E293B;
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.ccs-target-select:focus {
+  border-color: var(--ccs-primary);
+}
+
+.ccs-auto-sync-btn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px dashed var(--ccs-primary);
+  background: rgba(var(--ccs-primary-rgb), 0.08);
+  color: var(--ccs-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ccs-auto-sync-btn:hover {
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+}
+
+.ccs-auto-sync-btn.is-auto {
+  border-style: solid;
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+}
+
+/* Tabs Bar - ALWAYS VISIBLE, NEVER CLIPS */
+.ccs-tabs-bar {
+  flex-shrink: 0;
+  display: flex;
+  padding: 6px 16px;
+  gap: 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.015);
+}
+
+html.dark .ccs-tabs-bar {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ccs-tab-btn {
+  flex: 1;
+  padding: 7px 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+html.dark .ccs-tab-btn {
+  color: #94A3B8;
+}
+
+.ccs-tab-btn:hover {
+  color: var(--ccs-primary);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+html.dark .ccs-tab-btn:hover {
+  color: #38BDF8;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ccs-tab-btn.active {
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px var(--ccs-primary-glow);
+}
+
+/* ==========================================================================
+   5. SCROLLABLE BODY (KICHIK EKRANLARDA FAQAT O'RTA QISM SKROLL BO'LADI)
+   ========================================================================== */
+
+.ccs-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Custom modern thin scrollbar */
+.ccs-body::-webkit-scrollbar {
+  width: 5px;
+}
+.ccs-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ccs-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 9999px;
+}
+html.dark .ccs-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Tab Panels */
+.ccs-tab-panel {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+.ccs-tab-panel.active {
+  display: flex;
+  animation: ccsFade 0.2s ease forwards;
+}
+@keyframes ccsFade {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Active Color Preview Card */
+.ccs-active-card {
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+html.dark .ccs-active-card {
+  background: #1E293B;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.ccs-color-swatch-large {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.ccs-color-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.ccs-color-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.ccs-color-id-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ccs-primary);
+}
+
+html.dark .ccs-color-id-badge {
+  color: #38BDF8 !important;
+}
+
+.ccs-color-hex-text {
+  font-size: 14px;
+  font-weight: 800;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #0F172A;
+}
+
+html.dark .ccs-color-hex-text {
+  color: #FFFFFF;
+}
+
+.ccs-color-sub-text {
+  font-size: 10.5px;
+  color: #64748B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html.dark .ccs-color-sub-text {
+  color: #94A3B8;
+}
+
+.ccs-card-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.ccs-icon-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+html.dark .ccs-icon-action-btn {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #94A3B8;
+}
+
+.ccs-icon-action-btn:hover {
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+  border-color: var(--ccs-primary);
+}
+
+.ccs-icon-action-btn.active-fav {
+  background: #F59E0B;
+  color: #FFFFFF;
+  border-color: #F59E0B;
+}
+
+/* Category Selection Row */
+.ccs-category-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ccs-select-input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #FFFFFF;
+  color: #1E293B;
+  outline: none;
+  cursor: pointer;
+}
+
+html.dark .ccs-select-input {
+  background: #1E293B;
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Stepper Bar (+ / - va 1, 10, 100 qadamlar) */
+.ccs-stepper-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+html.dark .ccs-stepper-container {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.ccs-step-modes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+}
+
+html.dark .ccs-step-modes {
+  color: #94A3B8;
+}
+
+.ccs-step-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.ccs-step-pill {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 800;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #FFFFFF;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+html.dark .ccs-step-pill {
+  background: #1E293B;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #CBD5E1;
+}
+
+.ccs-step-pill.active {
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+  border-color: var(--ccs-primary);
+}
+
+.ccs-step-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.ccs-step-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 800;
+  border: none;
+  background: #FFFFFF;
+  color: #1E293B;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+html.dark .ccs-step-btn {
+  background: #1E293B;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ccs-step-btn:hover {
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+}
+
+.ccs-step-btn:active {
+  transform: scale(0.96);
+}
+
+/* Sliders (Saturation & Brightness) */
+.ccs-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ccs-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ccs-slider-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+}
+
+html.dark .ccs-slider-label {
+  color: #CBD5E1;
+}
+
+.ccs-range-input {
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #E2E8F0;
+  outline: none;
+  cursor: pointer;
+}
+
+html.dark .ccs-range-input {
+  background: #334155;
+}
+
+.ccs-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ccs-primary);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.ccs-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Swatches Mini-Grid */
+.ccs-swatches-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+html.dark .ccs-swatches-grid {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ccs-mini-swatch {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ccs-mini-swatch:hover {
+  transform: scale(1.3);
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.ccs-mini-swatch.active {
+  outline: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 3px var(--ccs-primary);
+  transform: scale(1.15);
+  z-index: 4;
+}
+
+/* Tab 2: Kod (HEX & RGB input) */
+.ccs-code-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ccs-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ccs-input-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+}
+
+html.dark .ccs-input-label {
+  color: #CBD5E1;
+}
+
+.ccs-text-field {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  background: #FFFFFF;
+  color: #0F172A;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+html.dark .ccs-text-field {
+  background: #1E293B;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.ccs-text-field:focus {
+  border-color: var(--ccs-primary);
+}
+
+.ccs-text-field.is-error {
+  border-color: #EF4444 !important;
+}
+
+.ccs-error-text {
+  font-size: 11px;
+  color: #EF4444;
+  font-weight: 600;
+  display: none;
+}
+
+.ccs-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ccs-native-color-picker {
+  width: 44px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+.ccs-apply-btn {
+  flex: 1;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  border: none;
+  background: var(--ccs-primary);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.ccs-apply-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.ccs-match-box {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(var(--ccs-primary-rgb), 0.08);
+  border: 1px solid rgba(var(--ccs-primary-rgb), 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ccs-match-label {
+  font-size: 10.5px;
+  color: #475569;
+  font-weight: 700;
+}
+
+html.dark .ccs-match-label {
+  color: #94A3B8;
+}
+
+.ccs-match-val {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ccs-primary);
+}
+
+/* Tab 3: Gradient controls */
+.ccs-gradient-preview {
+  height: 72px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 14px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ccs-gradient-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ccs-btn-secondary {
+  padding: 7px 12px;
+  border-radius: 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #FFFFFF;
+  color: #1E293B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+html.dark .ccs-btn-secondary {
+  background: #1E293B;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.ccs-btn-secondary:hover {
+  background: rgba(var(--ccs-primary-rgb), 0.08);
+  border-color: var(--ccs-primary);
+  color: var(--ccs-primary);
+}
+
+/* Tab 4: Saved / History */
+.ccs-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.ccs-saved-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+html.dark .ccs-saved-item {
+  background: #1E293B;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.ccs-saved-item:hover {
+  border-color: var(--ccs-primary);
+  transform: translateX(2px);
+}
+
+.ccs-saved-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.ccs-saved-info {
+  flex: 1;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+html.dark .ccs-saved-info {
+  color: #F8FAFC;
+}
+
+.ccs-empty-state {
+  font-size: 11.5px;
+  color: #94A3B8;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+/* ==========================================================================
+   6. FOOTER BAR (RESET / UNDO) - ALWAYS VISIBLE, NEVER CLIPS
+   ========================================================================== */
+
+.ccs-footer-bar {
+  flex-shrink: 0;
+  padding: 10px 16px 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+html.dark .ccs-footer-bar {
+  border-top-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ccs-footer-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #FFFFFF;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+html.dark .ccs-footer-btn {
+  background: #1E293B;
+  color: #E2E8F0;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.ccs-footer-btn:hover {
+  background: rgba(var(--ccs-primary-rgb), 0.1);
+  border-color: var(--ccs-primary);
+  color: var(--ccs-primary);
+}
+
+.ccs-footer-btn:active {
+  transform: scale(0.97);
+}
+
+/* Toast notification */
+#ccsToast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#ccsToast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (MOBIL VA KICHIK EKRANLAR)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  #ccsFloatingPanel {
+    right: 8px;
+    left: 8px;
+    width: auto;
+    max-width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px;
+  }
+
+  #ccsFloatingTrigger {
+    right: 10px;
+    width: 44px;
+    height: 44px;
+  }
+}

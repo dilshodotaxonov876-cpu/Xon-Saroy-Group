@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZiyoNet — Elektron Kutubxona v2.5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Merriweather"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.5); border-radius: 20px; }
+        .reader-sepia {
+            background-color: #f4ecd8 !important;
+            color: #433422 !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-200 antialiased font-sans flex flex-col min-h-screen">
+
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white text-xl shadow-md shadow-brand-500/20 font-bold">
+                    📚
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-600 dark:from-brand-500 dark:to-indigo-400">ZiyoNet</span>
+                    <span class="hidden sm:inline-block text-xs font-semibold ml-1.5 px-2 py-0.5 rounded bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300">v2.5</span>
+                </div>
+            </div>
+
+            <div class="flex-1 max-w-md hidden md:block">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">🔍</span>
+                    <input id="navSearch" type="text" placeholder="Kitob, she'r yoki darslik qidirish..." class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border border-transparent dark:border-slate-700/60 rounded-xl focus:bg-white dark:focus:bg-slate-900 focus:border-brand-500 outline-none transition-all placeholder:text-slate-400">
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button id="bookmarkFilterBtn" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition relative" title="Saqlanganlar">
+                    ⭐ <span class="hidden sm:inline font-medium text-xs ml-1">Sevimlilar</span>
+                    <span id="bookmarkBadge" class="hidden absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+
+                <button id="addBookBtn" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-sm shadow-brand-600/30 transition">
+                    <span>➕</span>
+                    <span class="hidden sm:inline">Qo‘shish</span>
+                </button>
+
+                <button id="themeToggleBtn" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition" title="Mavzuni o‘zgartirish">
+                    🌙
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <section class="relative overflow-hidden rounded-3xl shadow-xl shadow-brand-600/10 group">
+            <div id="heroSlider" class="flex transition-transform duration-700 ease-out">
+                
+                <div class="w-full flex-shrink-0 relative bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white p-8 md:p-12">
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md mb-4 border border-white/20">📖 Saralangan kutubxona</span>
+                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">Badiiy asarlar, she’riyat va oliy ta’lim darsliklari</h1>
+                        <p class="mt-4 text-blue-100 text-sm md:text-base leading-relaxed">Kerakli bo‘limni tanlang, qulay rejimda mutolaa qiling, ovozli tarzda tinglang yoki faylni yuklab oling.</p>
+                        <div class="mt-6 flex flex-wrap gap-3 text-sm font-medium">
+                            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
+                                <span>📚</span> <span id="statBooksCount">12 ta manba</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
+                                <span>🎧</span> <span>Audio-o‘qish rejimi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                </div>
+
+                <div class="w-full flex-shrink-0 relative bg-gradient-to-r from-amber-600 via-orange-600 to-rose-700 text-white p-8 md:p-12">
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md mb-4 border border-white/20">🔥 Hafta tanlovi</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">O‘tkan Kunlar — Abdulla Qodiriy</h2>
+                        <p class="mt-4 text-amber-100 text-sm md:text-base leading-relaxed">O‘zbek romanchiligining durdona asari. XIX asr Toshkent va Marg‘ilon muhiti hamda sof muhabbat qissasi.</p>
+                        <button onclick="openReader(101)" class="mt-6 px-5 py-2.5 bg-white text-orange-700 hover:bg-amber-50 font-bold text-sm rounded-xl shadow-lg transition inline-flex items-center gap-2">
+                            <span>📖</span> Hozir o‘qish
+                        </button>
+                    </div>
+                    <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                </div>
+
+                <div class="w-full flex-shrink-0 relative bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 text-white p-8 md:p-12">
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md mb-4 border border-white/20">🎓 Talabalar uchun</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">IT va Aniq Fanlar Darsliklari</h2>
+                        <p class="mt-4 text-emerald-100 text-sm md:text-base leading-relaxed">Python, SQL, Kiberxavfsizlik, Algoritmlar va matematika bo‘yicha ochiq o‘quv qo‘llanmalarni bir joyda o‘qing.</p>
+                        <button onclick="filterFromSlide('Darsliklar')" class="mt-6 px-5 py-2.5 bg-white text-teal-700 hover:bg-emerald-50 font-bold text-sm rounded-xl shadow-lg transition inline-flex items-center gap-2">
+                            <span>🔍</span> Darsliklarga o‘tish
+                        </button>
+                    </div>
+                    <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                </div>
+
+            </div>
+
+            <button id="prevSlide" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/25 hover:bg-black/45 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">❮</button>
+            <button id="nextSlide" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/25 hover:bg-black/45 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">❯</button>
+            <div id="sliderDots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20"></div>
+        </section>
+
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            
+            <aside class="w-full lg:w-64 flex-shrink-0 lg:sticky lg:top-24 space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/80 p-4 shadow-sm">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">Bo‘limlar</h3>
+                    
+                    <div class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 custom-scrollbar" id="categoryContainer">
+                        <button class="cat-pill active w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap bg-brand-600 text-white shadow-sm" data-category="Barchasi">Barchasi</button>
+                        <button class="cat-pill w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700" data-category="Badiiy adabiyot">📖 Badiiy adabiyot</button>
+                        <button class="cat-pill w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700" data-category="She’rlar">✍️ She’rlar</button>
+                        <button class="cat-pill w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700" data-category="Darsliklar">🎓 Darsliklar</button>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="flex-1 w-full space-y-6">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div class="md:hidden w-full">
+                        <input id="mobileSearch" type="text" placeholder="Qidirish..." class="w-full px-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:border-brand-500 outline-none">
+                    </div>
+                    <p class="text-sm font-semibold text-slate-600 dark:text-slate-300 hidden md:block">Barcha manbalar</p>
+
+                    <div class="flex items-center gap-3 self-end sm:self-auto">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Saralash:</span>
+                        <select id="sortSelect" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-3 py-2 outline-none focus:border-brand-500">
+                            <option value="default">Dastlabki tartib</option>
+                            <option value="title">Nom bo‘yicha (A-Z)</option>
+                            <option value="rating">Reyting bo‘yicha</option>
+                        </select>
+                    </div>
+                </div>
+
+                <section>
+                    <div id="booksGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+                    <div id="emptyState" class="hidden text-center py-16 px-4">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-3xl">🔍</div>
+                        <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">Hech qanday manba topilmadi</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">Kalit so‘zlarni tekshiring yoki boshqa bo‘limni tanlang.</p>
+                        <button id="resetFiltersBtn" class="mt-4 px-4 py-2 bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-300 font-semibold text-xs rounded-xl hover:bg-brand-100 transition">Barchasini ko‘rsatish</button>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <p>© 2026 ZiyoNet Kutubxonasi. Barcha huquqlar himoyalangan.</p>
+            <p>Ochiq ma'rifiy va ilmiy manbalar arxivi.</p>
+        </div>
+    </footer>
+
+    <div id="readerModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-6 transition-all">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-4xl h-[92vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800 transition-colors">
+            
+            <div class="px-4 sm:px-6 py-3.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-800/40">
+                <div class="min-w-0 flex-1">
+                    <span id="readerCatBadge" class="text-[11px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-brand-100 text-brand-700 dark:bg-brand-950 dark:text-brand-300">Bo'lim</span>
+                    <h2 id="readerTitle" class="text-base sm:text-lg font-bold truncate text-slate-900 dark:text-white mt-1">Sarlavha</h2>
+                    <p id="readerAuthor" class="text-xs text-slate-500 dark:text-slate-400 truncate">Muallif</p>
+                </div>
+
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <button id="ttsBtn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1" title="Ovozli tinglash">
+                        <span>🔊</span> <span class="hidden sm:inline">Tinglash</span>
+                    </button>
+
+                    <button id="sepiaToggleBtn" class="px-2.5 py-1.5 rounded-lg bg-[#f4ecd8] hover:bg-[#ebe0c5] text-[#433422] text-xs font-semibold border border-[#d8cbb0] transition" title="Qog'oz (Sepiya) fon">
+                        📜
+                    </button>
+
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-200 dark:border-slate-700">
+                        <button id="fontDec" class="px-2 py-1 text-xs font-bold hover:bg-white dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300">A-</button>
+                        <span id="fontSizeDisplay" class="px-1 text-[11px] text-slate-500">16</span>
+                        <button id="fontInc" class="px-2 py-1 text-xs font-bold hover:bg-white dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300">A+</button>
+                    </div>
+
+                    <select id="fontFamilySelect" class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs rounded-lg px-2 py-1.5 outline-none hidden sm:block">
+                        <option value="font-sans">Oddiy (Sans)</option>
+                        <option value="font-serif">Kitobiy (Serif)</option>
+                        <option value="font-mono">Kod/Matn (Mono)</option>
+                    </select>
+
+                    <button id="closeReader" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg text-lg leading-none" title="Yopish (Esc)">✕</button>
+                </div>
+            </div>
+
+            <div class="w-full h-1 bg-slate-200 dark:bg-slate-800">
+                <div id="readingProgress" class="h-full bg-brand-600 w-0 transition-all duration-150"></div>
+            </div>
+
+            <div id="readerBody" class="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar leading-relaxed whitespace-pre-wrap selection:bg-brand-500 selection:text-white text-slate-700 dark:text-slate-300 transition-colors"></div>
+
+            <div class="px-6 py-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 bg-slate-50/50 dark:bg-slate-800/40">
+                <span id="readingStats">O'qish vaqti: ~1 daqiqa</span>
+                <div class="flex gap-2">
+                    <button id="copyTextBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium transition">
+                        <span>📋</span> Nusxalash
+                    </button>
+                    <button id="readerDownloadBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-medium transition">
+                        <span>⬇️</span> Yuklab olish (.txt)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl p-6 border border-slate-200 dark:border-slate-800 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>📖</span> Yangi asar yoki darslik qo‘shish
+                </h3>
+                <button id="closeAddModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">✕</button>
+            </div>
+
+            <form id="newBookForm" class="space-y-4 text-sm">
+                <div class="p-3 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-dashed border-brand-300 dark:border-brand-800">
+                    <label class="block text-xs font-semibold text-brand-700 dark:text-brand-300 mb-1.5">📁 Tayyor .txt fayldan yuklash (ixtiyoriy)</label>
+                    <input type="file" id="txtFileInput" accept=".txt" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-600 file:text-white hover:file:bg-brand-700 cursor-pointer">
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1">Nomi</label>
+                    <input type="text" id="newTitle" required class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-brand-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1">Muallif / Shoir</label>
+                        <input type="text" id="newAuthor" required class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1">Bo‘lim</label>
+                        <select id="newCategory" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-brand-500">
+                            <option value="Badiiy adabiyot">Badiiy adabiyot</option>
+                            <option value="She’rlar">She’rlar</option>
+                            <option value="Darsliklar">Darsliklar</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1">Uslub rangi</label>
+                    <select id="newCoverColor" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-brand-500">
+                        <option value="from-blue-600 to-indigo-700">Moviy rang</option>
+                        <option value="from-amber-600 to-orange-700">Tillarang / Badiiy</option>
+                        <option value="from-purple-600 to-pink-700">Binafsha / She'riyat</option>
+                        <option value="from-emerald-600 to-teal-700">Zumrad yashil / Darslik</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1">Matn mazmuni</label>
+                    <textarea id="newContent" rows="5" required placeholder="Asar matni, she'r satrlari yoki o'quv mavzusi..." class="w-full p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-brand-500 font-mono text-xs"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" id="cancelAddBtn" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs">Bekor qilish</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs transition">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        const initialBooks = [
+            // --- BADIIY ADABIYOT ---
+            {
+                id: 101,
+                title: "O‘tkan Kunlar",
+                author: "Abdulla Qodiriy",
+                category: "Badiiy adabiyot",
+                rating: 4.9,
+                coverColor: "from-amber-600 to-orange-700",
+                content: `O‘TKAN KUNLAR\nMuallif: Abdulla Qodiriy\n\nTarixiy roman XIX asrning o‘rtalaridagi Toshkent va Marg‘ilon zaminidagi ijtimoiy muhit, oilaviy qadriyatlar hamda sof muhabbat sinovlari haqida hikoya qiladi.\n\nAsarning bosh qahramonlari Otabek va Kumushbibi orqali o'sha davrdagi jamiyatning ma'naviy qiyofasi, an'analari va fojialari chuqur psixologik mahorat bilan ochib beriladi.`
+            },
+            {
+                id: 102,
+                title: "Kecha va Kunduz",
+                author: "Abdulhamid Cho‘lpon",
+                category: "Badiiy adabiyot",
+                rating: 4.8,
+                coverColor: "from-amber-700 to-rose-700",
+                content: `KECHA VA KUNDUZ\nMuallif: Abdulhamid Cho‘lpon\n\nRoman xalqimiz tarixining muhim burilish nuqtalaridagi ma'naviy uyg'onish, erk va erksevarlik tuyg'ulari, qoloqlikka qarshi kurash mavzulariga bag'ishlangan.\n\nZebi obrazining taqdiri orqali adolat, erkinlik va shaxs fojiasi yorqin ramzlar orqali ifodalanadi.`
+            },
+            {
+                id: 103,
+                title: "Sariq devni minib",
+                author: "Xudoyberdi To‘xtaboyev",
+                category: "Badiiy adabiyot",
+                rating: 4.9,
+                coverColor: "from-orange-500 to-red-600",
+                content: `SARIQ DEVNI MINIB\nMuallif: Xudoyberdi To‘xtaboyev\n\nSarguzasht roman bosh qahramoni Hoshimjon Ro‘ziyevning sehrli qalpoqcha topib olishi va shu orqali boshidan kechirgan ajoyib, kulgili va ibratli voqealari haqida.\n\nAsar mehnatsevarlik, ilm olishning ahamiyati va halollikni yoshlarga qiziqarli tarzda singdiradi.`
+            },
+            {
+                id: 104,
+                title: "Yulduzli Tunlar",
+                author: "Pirimqul Qodirov",
+                category: "Badiiy adabiyot",
+                rating: 5.0,
+                coverColor: "from-yellow-600 to-amber-800",
+                content: `YULDUZLI TUNLAR (Bobur)\nMuallif: Pirimqul Qodirov\n\nUshbu tarixiy roman buyuk sarkarda, shoir va davlat arbobi Zahiriddin Muhammad Boburning hayoti, kurashlari va ijodiy merosiga bag‘ishlangan.\n\nAsarda Andijondan Hindistongacha bo‘lgan mashaqqatli yo‘l, Vatan sog‘inchi va insoniy fazilatlar yuksak mahorat bilan tasvirlangan.`
+            },
+
+            // --- SHE'RLAR ---
+            {
+                id: 201,
+                title: "O‘zbekiston — Vatanim Manim",
+                author: "Erkin Vohidov",
+                category: "She’rlar",
+                rating: 5.0,
+                coverColor: "from-purple-600 to-pink-700",
+                content: `VATAN MADHI\nMuallif: Erkin Vohidov\n\nKuz quyoshi nur to‘kar mayin,\nDalalarda oq oltin ungan.\nHar bir giyoh, tuproq har qadam,\nAjdodlarning nafasi tekkan.\n\nOna yurtim — aziz bo‘stonim,\nKo‘nglimdagi bitmas dostonsan.\nHar giyohing menga sajdagoh,\nFidodir bu jonim, O‘zbekiston!`
+            },
+            {
+                id: 202,
+                title: "Tong Nafasi",
+                author: "Abdulla Oripov",
+                category: "She’rlar",
+                rating: 4.9,
+                coverColor: "from-indigo-600 to-purple-800",
+                content: `TONG YOG‘DUSI\nMuallif: Abdulla Oripov\n\nTong otar oq qushlar parvozi misol,\nUfqqa sepilar mayin nurlar.\nQalblarda uyg‘onar yangi bir hayol,\nEzgu maqsad sari boshlar yo‘llar.\n\nHayot sevgisidir ko‘ngilga quvvat,\nMehnatda topilar haqiqiy rohat.\nEl-yurt ravnaqi deb yashamoq — sharaf,\nHar o‘tgan onimiz katta omonat.`
+            },
+            {
+                id: 203,
+                title: "Vatanim",
+                author: "Muhammad Yusuf",
+                category: "She’rlar",
+                rating: 5.0,
+                coverColor: "from-fuchsia-600 to-rose-600",
+                content: `VATANIM\nMuallif: Muhammad Yusuf\n\nMen dunyoni nima qildim,\nO‘zing yorug‘ jahonim.\nO‘zim xoqon, o‘zim sulton,\nSen taxti Sulaymonim.\n\nYolg‘izim, yagonam deymi,\nTopingan koshonam deymi,\nO‘zing mening ulug‘lardan\nUlug‘imsan, Vatanim!`
+            },
+            {
+                id: 204,
+                title: "Bahor keldi seni so‘roqlab",
+                author: "Zulfiya",
+                category: "She’rlar",
+                rating: 4.9,
+                coverColor: "from-violet-600 to-indigo-700",
+                content: `BAHOR KELDI SENI SO‘ROQLAB\nMuallif: Zulfiya\n\nSalqin saharlarda, bodom gulida,\nBinafsha labida, yerlarda bahor.\nQushlarning parvozi, yellarning nozi,\nBaxmal vodiylarda, qirlarda bahor...\n\nHijron kunlarida shoir qalbini\nUyg‘otib, gullarga burkagan bahor.`
+            },
+
+            // --- DARSLIKLAR ---
+            {
+                id: 301,
+                title: "Algoritmlar va Ma’lumotlar Strukturasi",
+                author: "Oliy ta'lim darsligi",
+                category: "Darsliklar",
+                rating: 5.0,
+                coverColor: "from-blue-600 to-indigo-700",
+                content: `ALGORITMLAR VA MA'LUMOTLAR TUZILMASI\n\n1-BOB: Asosiy tushunchalar\nAlgoritm — berilgan ma'lumotlarni bosqichma-bosqich qayta ishlab, kutilgan natijaga olib keluvchi mantiqiy ko'rsatmalar tizimidir.\n\nAsosiy ma'lumot tuzilmalari:\n- Statik massivlar va dinamik vektorlar;\n- Bog'langan ro'yxatlar (bir va ikki tomonlama);\n- Stek (LIFO arxitekturasi);\n- Navbat (FIFO arxitekturasi);\n- Daraxtlar va graf tuzilmalari.\n\nAlgoritm samaradorligi Big-O (vaqt va xotira murakkabligi) yordamida tahlil qilinadi.`
+            },
+            {
+                id: 302,
+                title: "Differensial Tenglamalar Asoslari",
+                author: "Matematika fakulteti darsligi",
+                category: "Darsliklar",
+                rating: 4.8,
+                coverColor: "from-emerald-600 to-teal-700",
+                content: `ODDIY DIFFERENSIAL TENGLAMALAR\n\n1-BOB: Birinchi tartibli tenglamalar\nDifferensial tenglama deb, noma'lum funksiya va uning hosilalari orasidagi munosabatni ifodalovchi matematik tenglamaga aytiladi.\n\nAsosiy turlari:\n1. O'zgaruvchilari ajraladigan tenglamalar;\n2. Bir jinsli birinchi tartibli differensial tenglamalar;\n3. Chiziqli tenglamalar va Bernulli tenglamasi.\n\nBoshlang'ich shartlar berilganda xususiy yechimni topish Koshi masalasi deyiladi.`
+            },
+            {
+                id: 303,
+                title: "Python Dasturlash Tili Asoslari",
+                author: "IT Akademiya qo‘llanmasi",
+                category: "Darsliklar",
+                rating: 5.0,
+                coverColor: "from-cyan-600 to-blue-700",
+                content: `PYTHON DASTURLASH TILI\n\n1-DARS: O'zgaruvchilar va Ma'lumot turlari\nPython — o'rganishga oson, lekin juda kuchli yuqori darajali dasturlash tilidir. Sun'iy intellekt, veb-dasturlash va avtomatlashtirishda keng qo'llaniladi.\n\nAsosiy ma'lumot turlari:\n- int (butun sonlar): x = 10\n- float (o'nlik sonlar): pi = 3.14\n- str (matnlar): ism = "Ali"\n- bool (mantiqiy): is_active = True\n- list (ro'yxatlar): mevalar = ["olma", "anor"]\n\nShart operatorlari: if, elif, else.\nSikllar: for va while.`
+            },
+            {
+                id: 304,
+                title: "Kiberxavfsizlik va Tarmoqlar",
+                author: "Axborot xavfsizligi kafedrasi",
+                category: "Darsliklar",
+                rating: 4.9,
+                coverColor: "from-teal-600 to-emerald-800",
+                content: `KIBERXAVFSIZLIK ASOSLARI\n\n1-BOB: Axborot xavfsizligining CIA triadasi\nHar qanday axborot tizimi uchta asosiy tamoyilga tayanadi:\n1. Confidentiality (Maxfiylik) — ma'lumotlarga faqat ruxsat etilgan shaxslarning kirishi.\n2. Integrity (Butunlik) — ma'lumotlarning ruxsatsiz o'zgartirilmasligi.\n3. Availability (Foydalanish mumkinligi) — tizimning doimiy ishchi holatda bo'lishi.\n\nAsosiy tahdidlar: Phishing, DDoS hujumlar, SQL Injection va zararli dasturlar (Malware).`
+            }
+        ];
+
+        let books = JSON.parse(localStorage.getItem('lib_divided_books_v2')) || initialBooks;
+        let bookmarks = JSON.parse(localStorage.getItem('lib_divided_bookmarks')) || [];
+        let activeCategory = "Barchasi";
+        let searchQuery = "";
+        let showOnlyBookmarks = false;
+        let sortBy = "default";
+        let currentReaderBook = null;
+        let readerFontSize = 16;
+        let isSpeaking = false;
+
+        const booksGrid = document.getElementById('booksGrid');
+        const emptyState = document.getElementById('emptyState');
+        const statBooksCount = document.getElementById('statBooksCount');
+        const bookmarkBadge = document.getElementById('bookmarkBadge');
+        const bookmarkFilterBtn = document.getElementById('bookmarkFilterBtn');
+        const navSearch = document.getElementById('navSearch');
+        const mobileSearch = document.getElementById('mobileSearch');
+        const sortSelect = document.getElementById('sortSelect');
+        const categoryContainer = document.getElementById('categoryContainer');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+
+        const readerModal = document.getElementById('readerModal');
+        const closeReader = document.getElementById('closeReader');
+        const readerTitle = document.getElementById('readerTitle');
+        const readerAuthor = document.getElementById('readerAuthor');
+        const readerCatBadge = document.getElementById('readerCatBadge');
+        const readerBody = document.getElementById('readerBody');
+        const readingProgress = document.getElementById('readingProgress');
+        const fontSizeDisplay = document.getElementById('fontSizeDisplay');
+        const fontDec = document.getElementById('fontDec');
+        const fontInc = document.getElementById('fontInc');
+        const fontFamilySelect = document.getElementById('fontFamilySelect');
+        const readerDownloadBtn = document.getElementById('readerDownloadBtn');
+        const copyTextBtn = document.getElementById('copyTextBtn');
+        const sepiaToggleBtn = document.getElementById('sepiaToggleBtn');
+        const ttsBtn = document.getElementById('ttsBtn');
+
+        const addBookBtn = document.getElementById('addBookBtn');
+        const addModal = document.getElementById('addModal');
+        const closeAddModal = document.getElementById('closeAddModal');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const newBookForm = document.getElementById('newBookForm');
+        const txtFileInput = document.getElementById('txtFileInput');
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2 transition-all duration-300 transform translate-y-2 opacity-0';
+            toast.textContent = message;
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleBtn.innerHTML = '☀️';
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggleBtn.innerHTML = '🌙';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.innerHTML = isDark ? '☀️' : '🌙';
+        });
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+        }
+
+        function getCategoryBadgeColor(cat) {
+            if (cat === "She’rlar") return "bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300";
+            if (cat === "Darsliklar") return "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
+            return "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300";
+        }
+
+        function updateCategoryCounts() {
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                const cat = btn.dataset.category;
+                const count = cat === "Barchasi" ? books.length : books.filter(b => b.category === cat).length;
+                const baseText = btn.textContent.replace(/\s*\(\d+\)$/, '');
+                btn.textContent = `${baseText} (${count})`;
+            });
+        }
+
+        function renderBooks() {
+            updateCategoryCounts();
+            let filtered = books.filter(b => {
+                const matchesCat = activeCategory === "Barchasi" || b.category === activeCategory;
+                const searchLower = searchQuery.toLowerCase();
+                const matchesSearch = b.title.toLowerCase().includes(searchLower) || 
+                                      b.author.toLowerCase().includes(searchLower) || 
+                                      b.category.toLowerCase().includes(searchLower);
+                const matchesBookmark = !showOnlyBookmarks || bookmarks.includes(b.id);
+                return matchesCat && matchesSearch && matchesBookmark;
+            });
+
+            if (sortBy === 'title') {
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortBy === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            statBooksCount.textContent = `${books.length} ta manba`;
+            if (bookmarks.length > 0) {
+                bookmarkBadge.textContent = bookmarks.length;
+                bookmarkBadge.classList.remove('hidden');
+            } else {
+                bookmarkBadge.classList.add('hidden');
+            }
+
+            if (filtered.length === 0) {
+                booksGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            booksGrid.innerHTML = filtered.map(b => {
+                const isBookmarked = bookmarks.includes(b.id);
+                const badgeStyle = getCategoryBadgeColor(b.category);
+                return `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+                    <div class="h-44 bg-gradient-to-tr ${b.coverColor || 'from-blue-600 to-indigo-700'} p-5 text-white flex flex-col justify-between relative overflow-hidden">
+                        <div class="flex justify-between items-center z-10">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 uppercase tracking-wider">${escapeHtml(b.category)}</span>
+                            <div class="flex gap-1.5">
+                                <button onclick="toggleBookmark(${b.id})" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition" title="Sevimlilar">
+                                    ${isBookmarked ? '⭐' : '☆'}
+                                </button>
+                                <button onclick="deleteBook(${b.id})" class="w-8 h-8 rounded-full bg-red-500/40 hover:bg-red-500/80 backdrop-blur-md flex items-center justify-center transition opacity-0 group-hover:opacity-100" title="O'chirish">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                        <div class="z-10">
+                            <h3 class="font-extrabold text-lg leading-tight line-clamp-2 drop-shadow-sm">${escapeHtml(b.title)}</h3>
+                            <p class="text-xs text-white/80 mt-1 line-clamp-1">${escapeHtml(b.author)}</p>
+                        </div>
+                        <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+                    </div>
+
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                            <div class="flex items-center gap-1 text-amber-500 font-bold">
+                                <span>★</span> <span>${b.rating || '5.0'}</span>
+                            </div>
+                            <span class="text-[11px] px-2 py-0.5 rounded font-medium ${badgeStyle}">${escapeHtml(b.category)}</span>
+                        </div>
+
+                        <div class="flex items-center gap-2 pt-2">
+                            <button onclick="openReader(${b.id})" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm shadow-brand-600/20">
+                                <span>📖</span> O‘qish
+                            </button>
+                            <button onclick="downloadBook(${b.id})" class="px-3 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold text-xs rounded-xl transition" title="Yuklab olish">
+                                ⬇️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        window.toggleBookmark = function(id) {
+            if (bookmarks.includes(id)) {
+                bookmarks = bookmarks.filter(bId => bId !== id);
+                showToast("Sevimlilardan olib tashlandi");
+            } else {
+                bookmarks.push(id);
+                showToast("⭐ Sevimlilarga qo‘shildi");
+            }
+            localStorage.setItem('lib_divided_bookmarks', JSON.stringify(bookmarks));
+            renderBooks();
+        };
+
+        window.deleteBook = function(id) {
+            if (confirm("Ushbu manbani kutubxonadan o‘chirmoqchimisiz?")) {
+                books = books.filter(b => b.id !== id);
+                bookmarks = bookmarks.filter(bId => bId !== id);
+                localStorage.setItem('lib_divided_books_v2', JSON.stringify(books));
+                localStorage.setItem('lib_divided_bookmarks', JSON.stringify(bookmarks));
+                renderBooks();
+                showToast("🗑️ Manba o‘chirildi");
+            }
+        };
+
+        window.openReader = function(id) {
+            const b = books.find(x => x.id === id);
+            if (!b) return;
+            currentReaderBook = b;
+
+            readerTitle.textContent = b.title;
+            readerAuthor.textContent = b.author;
+            readerCatBadge.textContent = b.category;
+            readerCatBadge.className = `text-[11px] font-bold px-2 py-0.5 rounded uppercase tracking-wider ${getCategoryBadgeColor(b.category)}`;
+            
+            readerBody.textContent = b.content;
+            readerBody.scrollTop = 0;
+            readingProgress.style.width = '0%';
+            
+            if (b.category === "She’rlar") {
+                readerBody.classList.add("text-center", "italic");
+            } else {
+                readerBody.classList.remove("text-center", "italic");
+            }
+
+            const words = b.content.trim().split(/\s+/).length;
+            const minutes = Math.max(1, Math.round(words / 140));
+            document.getElementById('readingStats').textContent = `O'qish vaqti: ~${minutes} daqiqa (${words} ta so'z)`;
+
+            readerModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        };
+
+        function closeReaderModal() {
+            readerModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            stopTTS();
+        }
+
+        readerBody.addEventListener('scroll', () => {
+            const scrollTop = readerBody.scrollTop;
+            const scrollHeight = readerBody.scrollHeight - readerBody.clientHeight;
+            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 100;
+            readingProgress.style.width = `${progress}%`;
+        });
+
+        sepiaToggleBtn.addEventListener('click', () => {
+            readerBody.classList.toggle('reader-sepia');
+        });
+
+        function stopTTS() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isSpeaking = false;
+            ttsBtn.innerHTML = '<span>🔊</span> <span class="hidden sm:inline">Tinglash</span>';
+        }
+
+        ttsBtn.addEventListener('click', () => {
+            if (!('speechSynthesis' in window)) {
+                showToast("Brauzeringiz ovozli o‘qishni qo‘llab-quvvatlamaydi");
+                return;
+            }
+            if (isSpeaking) {
+                stopTTS();
+                return;
+            }
+            if (currentReaderBook) {
+                window.speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(currentReaderBook.content);
+                const voices = window.speechSynthesis.getVoices();
+                const uzVoice = voices.find(v => v.lang.includes('uz'));
+                if (uzVoice) {
+                    utterance.voice = uzVoice;
+                    utterance.lang = 'uz-UZ';
+                }
+
+                utterance.rate = 0.95;
+                utterance.onend = () => stopTTS();
+                utterance.onerror = () => {
+                    stopTTS();
+                    showToast("❌ Ovozli o‘qishda xatolik yuz berdi");
+                };
+
+                window.speechSynthesis.speak(utterance);
+                isSpeaking = true;
+                ttsBtn.innerHTML = '<span>⏹️</span> <span class="hidden sm:inline">To‘xtatish</span>';
+            }
+        });
+
+        copyTextBtn.addEventListener('click', () => {
+            if (!currentReaderBook) return;
+            navigator.clipboard.writeText(currentReaderBook.content).then(() => {
+                showToast("📋 Matn nusxalandi!");
+            });
+        });
+
+        window.downloadBook = function(id) {
+            const b = books.find(x => x.id === id);
+            if (!b) return;
+
+            const content = `ZIYONET KUTUBXONASI\n================================\nNOMI: ${b.title}\nMUALLIF: ${b.author}\nBO'LIM: ${b.category}\n================================\n\n${b.content}`;
+            const blob = new Blob(['\uFEFF' + content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const safeFileName = b.title
+                .replace(/[^a-zA-Z0-9а-яА-ЯёЁўқғҳЎҚҒҲ\s_-]/g, '')
+                .trim()
+                .replace(/\s+/g, '_') || 'asar';
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${safeFileName}.txt`;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 1000);
+
+            showToast(`⬇️ "${b.title}" yuklab olindi!`);
+        };
+
+        closeReader.addEventListener('click', closeReaderModal);
+        readerModal.addEventListener('click', (e) => {
+            if (e.target === readerModal) closeReaderModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!readerModal.classList.contains('hidden')) closeReaderModal();
+                if (!addModal.classList.contains('hidden')) addModal.classList.add('hidden');
+            }
+        });
+
+        fontInc.addEventListener('click', () => {
+            if (readerFontSize < 26) {
+                readerFontSize += 2;
+                readerBody.style.fontSize = `${readerFontSize}px`;
+                fontSizeDisplay.textContent = readerFontSize;
+            }
+        });
+
+        fontDec.addEventListener('click', () => {
+            if (readerFontSize > 12) {
+                readerFontSize -= 2;
+                readerBody.style.fontSize = `${readerFontSize}px`;
+                fontSizeDisplay.textContent = readerFontSize;
+            }
+        });
+
+        fontFamilySelect.addEventListener('change', (e) => {
+            readerBody.classList.remove('font-sans', 'font-serif', 'font-mono');
+            readerBody.classList.add(e.target.value);
+        });
+
+        readerDownloadBtn.addEventListener('click', () => {
+            if (currentReaderBook) downloadBook(currentReaderBook.id);
+        });
+
+        function handleSearch(e) {
+            searchQuery = e.target.value.trim();
+            renderBooks();
+        }
+        navSearch.addEventListener('input', handleSearch);
+        mobileSearch.addEventListener('input', handleSearch);
+
+        categoryContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.cat-pill');
+            if (!btn) return;
+
+            document.querySelectorAll('.cat-pill').forEach(el => {
+                el.classList.remove('active', 'bg-brand-600', 'text-white', 'shadow-sm');
+                el.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border');
+            });
+
+            btn.classList.add('active', 'bg-brand-600', 'text-white', 'shadow-sm');
+            btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border');
+
+            activeCategory = btn.dataset.category;
+            renderBooks();
+        });
+
+        sortSelect.addEventListener('change', (e) => {
+            sortBy = e.target.value;
+            renderBooks();
+        });
+
+        bookmarkFilterBtn.addEventListener('click', () => {
+            showOnlyBookmarks = !showOnlyBookmarks;
+            bookmarkFilterBtn.classList.toggle('bg-brand-50', showOnlyBookmarks);
+            bookmarkFilterBtn.classList.toggle('text-brand-600', showOnlyBookmarks);
+            bookmarkFilterBtn.classList.toggle('border-brand-300', showOnlyBookmarks);
+            renderBooks();
+        });
+
+        resetFiltersBtn.addEventListener('click', () => {
+            searchQuery = "";
+            navSearch.value = "";
+            mobileSearch.value = "";
+            activeCategory = "Barchasi";
+            showOnlyBookmarks = false;
+            bookmarkFilterBtn.classList.remove('bg-brand-50', 'text-brand-600', 'border-brand-300');
+
+            document.querySelectorAll('.cat-pill').forEach(el => {
+                const isAll = el.dataset.category === 'Barchasi';
+                el.classList.toggle('active', isAll);
+                el.classList.toggle('bg-brand-600', isAll);
+                el.classList.toggle('text-white', isAll);
+                el.classList.toggle('bg-white', !isAll);
+                el.classList.toggle('dark:bg-slate-800', !isAll);
+                el.classList.toggle('text-slate-600', !isAll);
+                el.classList.toggle('dark:text-slate-300', !isAll);
+            });
+            renderBooks();
+        });
+
+        addBookBtn.addEventListener('click', () => addModal.classList.remove('hidden'));
+        closeAddModal.addEventListener('click', () => addModal.classList.add('hidden'));
+        cancelAddBtn.addEventListener('click', () => addModal.classList.add('hidden'));
+
+        txtFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                document.getElementById('newContent').value = ev.target.result;
+                if (!document.getElementById('newTitle').value) {
+                    document.getElementById('newTitle').value = file.name.replace(/\.txt$/i, '');
+                }
+                showToast("📄 Fayl matni yuklandi!");
+            };
+            reader.readAsText(file);
+        });
+
+        newBookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newBook = {
+                id: Date.now(),
+                title: document.getElementById('newTitle').value.trim(),
+                author: document.getElementById('newAuthor').value.trim(),
+                category: document.getElementById('newCategory').value,
+                coverColor: document.getElementById('newCoverColor').value,
+                content: document.getElementById('newContent').value.trim(),
+                rating: 5.0
+            };
+
+            books.unshift(newBook);
+            localStorage.setItem('lib_divided_books_v2', JSON.stringify(books));
+
+            newBookForm.reset();
+            addModal.classList.add('hidden');
+            renderBooks();
+            showToast("✅ Yangi manba saqlandi!");
+        });
+
+        const heroSlider = document.getElementById('heroSlider');
+        const prevSlideBtn = document.getElementById('prevSlide');
+        const nextSlideBtn = document.getElementById('nextSlide');
+        const sliderDots = document.getElementById('sliderDots');
+        const totalSlides = heroSlider.children.length;
+        let currentSlide = 0;
+        let slideInterval;
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = `h-2 rounded-full transition-all duration-300 ${i === 0 ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`;
+            dot.addEventListener('click', () => goToSlide(i));
+            sliderDots.appendChild(dot);
+        }
+
+        function updateSlider() {
+            heroSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            Array.from(sliderDots.children).forEach((dot, idx) => {
+                dot.className = `h-2 rounded-full transition-all duration-300 ${idx === currentSlide ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`;
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = (index + totalSlides) % totalSlides;
+            updateSlider();
+            resetSlideTimer();
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function resetSlideTimer() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        prevSlideBtn.addEventListener('click', prevSlide);
+        nextSlideBtn.addEventListener('click', nextSlide);
+        heroSlider.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        heroSlider.parentElement.addEventListener('mouseleave', resetSlideTimer);
+
+        window.filterFromSlide = function(cat) {
+            const targetBtn = document.querySelector(`.cat-pill[data-category="${cat}"]`);
+            if (targetBtn) {
+                targetBtn.click();
+                targetBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        resetSlideTimer();
+        renderBooks();
+    </script>
+</body>
+</html>

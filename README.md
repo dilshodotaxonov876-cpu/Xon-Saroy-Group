@@ -1,7 +1,7 @@
 # "XON SAROY" — Quruq Qurilish Aralashmalari Korporativ Katalog Sayti
 
 > **Shior:** Turkiya texnologiyasi asosida O'zbekistonda ishlab chiqarilgan.  
-> **Uslub:** Megamix.uz darajasidagi premium, zamonaviy va mobil qurilmalarga to'liq moslashgan korporativ katalog.
+> **Uslub:** XON SAROY premium, zamonaviy va mobil qurilmalarga to'liq moslashgan korporativ katalog.
 
 ---
 
@@ -14,7 +14,7 @@
    - "Ariza qoldirish" tezkor tugmasi
 
 2. **Hero Banner**:
-   - Megamix uslubidagi qudratli taqdimot, 3D qop vizuali va sifat kafolati statistikasi
+   - XON SAROY premium interaktiv 3D vitrinasi, 3D qop vizuali va sifat kafolati statistikasi
    - "Ustalar uchun maxsus BONUS" aksiyasiga to'g'ridan-to'g'ri o'tish
 
 3. **Ustalar Uchun Maxsus BONUS (Aksiya Bloki)**:

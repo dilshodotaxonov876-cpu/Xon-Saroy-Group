@@ -326,7 +326,8 @@ function getProductBagSvg(product) {
       <div class="relative w-full flex items-center justify-center py-1 select-none">
         <img src="${product.image}" 
              alt="${product.name}" 
-             class="w-full h-auto max-h-[310px] object-contain drop-shadow-2xl transition-transform duration-300 pointer-events-none" 
+             class="w-full h-auto max-h-[350px] object-contain drop-shadow-xl transition-transform duration-300 pointer-events-none" 
+             style="image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; transform: translateZ(0);"
              loading="lazy" />
       </div>
     `;
@@ -335,7 +336,7 @@ function getProductBagSvg(product) {
 }
 
 // ==========================================================================
-// 4. TILLARNI ALMASHTIRISH (UZ / RU)
+// 4. TILLARNI ALMASHTIRISH (UZ / RU / EN)
 // ==========================================================================
 function setLanguage(lang) {
   if (!TRANSLATIONS[lang]) return;
@@ -344,296 +345,276 @@ function setLanguage(lang) {
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (TRANSLATIONS[lang][key]) {
+    if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
       el.textContent = TRANSLATIONS[lang][key];
     }
   });
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (TRANSLATIONS[lang][key]) {
+    if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
       el.setAttribute('placeholder', TRANSLATIONS[lang][key]);
     }
   });
 
-  const btnUz = document.getElementById('langUzBtn');
-  const btnRu = document.getElementById('langRuBtn');
-  if (btnUz && btnRu) {
-    if (lang === 'uz') {
-      btnUz.className = "px-3 py-1 text-xs font-bold rounded bg-red-600 text-white shadow-sm transition";
-      btnRu.className = "px-3 py-1 text-xs font-bold rounded text-slate-600 hover:text-slate-900 transition";
-    } else {
-      btnRu.className = "px-3 py-1 text-xs font-bold rounded bg-red-600 text-white shadow-sm transition";
-      btnUz.className = "px-3 py-1 text-xs font-bold rounded text-slate-600 hover:text-slate-900 transition";
+  // Til tugmalarini faollashtirish (UZ, RU, EN)
+  ['UZ', 'RU', 'EN'].forEach(code => {
+    const btn = document.getElementById(`lang${code}`);
+    if (btn) {
+      if (code.toLowerCase() === lang.toLowerCase()) {
+        btn.className = "text-amber-300 font-black underline decoration-2 underline-offset-4 transition";
+      } else {
+        btn.className = "text-white/75 hover:text-white transition";
+      }
     }
-  }
+  });
 
   renderProducts();
-  populateCalculatorProducts();
-  calculateConsumption();
+
+  if (typeof populateCalculatorProducts === 'function' && document.getElementById('calcProductSelect')) {
+    populateCalculatorProducts();
+    calculateConsumption();
+  }
 
   if (currentModalProductId) {
     openProductModal(currentModalProductId);
   }
 }
 
+let currentSearchQuery = '';
+
 // ==========================================================================
-// 5. MAHSULOTLAR KATALOGINI RENDER QILISH VA FILTRLASH
+// 5. MAHSULOTLAR KATALOGINI RENDER QILISH VA FILTRLASH (YANGI DIZAYN)
 // ==========================================================================
+let currentCatalogFilter = 'barchasi';
+
+function filterCatalog(category, btnElement) {
+  currentCatalogFilter = category;
+
+  // Filtr pilllarini faollashtirish
+  const container = document.getElementById('catalogFilterPills');
+  if (container) {
+    container.querySelectorAll('.catalog-filter-pill').forEach(btn => {
+      btn.classList.remove('active');
+    });
+  }
+  if (btnElement) {
+    btnElement.classList.add('active');
+  }
+
+  // Agar batafsil oyna ochiq bo'lsa, uni yopib ro'yxatga qaytamiz
+  closeProductDetailView();
+
+  renderProducts();
+}
+
 function renderProducts() {
   const container = document.getElementById('productsGrid');
   if (!container) return;
 
-  const t = TRANSLATIONS[currentLang];
   const filtered = PRODUCTS_DATA.filter(item => {
-    if (currentCategory === 'all') return true;
-    return item.category === currentCategory;
+    if (currentCatalogFilter === 'barchasi' || currentCatalogFilter === 'all') return true;
+    return item.category === currentCatalogFilter;
   });
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="col-span-full text-center py-12 text-slate-500">
-        <p class="text-lg font-semibold">${currentLang === 'uz' ? "Ushbu toifada mahsulot topilmadi" : "В данной категории товары не найдены"}</p>
+      <div class="col-span-full text-center py-16 text-slate-500">
+        <span class="text-4xl block mb-3">🔍</span>
+        <p class="text-lg font-bold">Ushbu toifada mahsulot topilmadi</p>
+        <p class="text-xs text-slate-400 mt-1">Boshqa toifani tanlang yoki "Barchasi" tugmasini bosing</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = filtered.map(product => {
-    const isUz = currentLang === 'uz';
-    const title = isUz ? product.title.uz : product.title.ru;
-    const desc = isUz ? product.shortDesc.uz : product.shortDesc.ru;
-    const water = isUz ? product.specs.waterRatio.uz : product.specs.waterRatio.ru;
-    const consumption = isUz ? product.specs.consumption.uz : product.specs.consumption.ru;
-    const drying = isUz ? product.specs.dryingTime.uz : product.specs.dryingTime.ru;
-
-    const ind = product.categoryIndicator;
-    const indLabel = isUz ? ind.labelUz : ind.labelRu;
-
-    return `
-      <div class="bag-card bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between group ${product.glowClass}">
-        <!-- Yuqori qism: Vizual va FRONT Mockup Qop -->
-        <div class="relative p-5 pb-2 bg-gradient-to-b from-slate-50 to-white flex flex-col items-center min-h-[330px] justify-center">
-          
-          <!-- Rangli Kategoriya Tegi -->
-          <div class="absolute top-4 left-4 z-10">
-            <span class="px-2.5 py-1 rounded-md text-[11px] font-black uppercase tracking-wider shadow-sm" style="background-color: ${ind.bgColor}; color: ${ind.color}; border: 1px solid ${ind.borderColor}">
-              ${indLabel}
-            </span>
-          </div>
-
-          <!-- Qop vazni -->
-          <div class="absolute top-4 right-4 z-10">
-            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold bg-slate-900 text-white shadow-sm">
-              ${product.weight}
-            </span>
-          </div>
-
-          <!-- XON SAROY 3D Mockup Qopi (Hoverda 3D ko'tarilish va nur bilan) -->
-          <div class="cursor-pointer my-2 w-full max-w-[230px] bag-2d-container" onclick="openProductModal('${product.id}')">
-            ${getProductBagSvg(product)}
-          </div>
-        </div>
-
-        <!-- O'rta qism: Matn va texnik parametrlar -->
-        <div class="p-6 pt-2 flex-1 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${product.ribbonColor}"></span>
-              <span class="text-[11px] font-extrabold uppercase tracking-wider" style="color: ${product.ribbonColor}">
-                ${product.ruSubtitle}
-              </span>
-            </div>
-            <h3 class="text-lg font-black text-slate-900 group-hover:text-red-600 transition-colors leading-snug cursor-pointer" onclick="openProductModal('${product.id}')">
-              ${title}
-            </h3>
-            <p class="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed">
-              ${desc}
-            </p>
-          </div>
-
-          <!-- Asosiy parametrlar bloki -->
-          <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-700 bg-slate-50/80 p-3 rounded-xl">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500 font-medium">${t.cardWater}:</span>
-              <span class="font-bold text-slate-900">${water}</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500 font-medium">${t.cardConsumption}:</span>
-              <span class="font-bold text-slate-900">${consumption}</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500 font-medium">${t.cardDrying}:</span>
-              <span class="font-bold text-slate-900">${drying}</span>
-            </div>
-          </div>
-
-          <!-- Tugmalar -->
-          <div class="mt-5 grid grid-cols-2 gap-2">
-            <button onclick="openProductModal('${product.id}')" class="w-full py-2.5 px-3 rounded-xl border border-slate-300 hover:border-slate-800 text-slate-800 text-xs font-bold transition flex items-center justify-center gap-1">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              ${t.cardDetailsBtn.split(' ')[0]}
-            </button>
-            <button onclick="triggerOrderForProduct('${product.id}')" class="w-full py-2.5 px-3 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-md shadow-red-600/20 transition flex items-center justify-center gap-1">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-              ${t.cardOrderBtn}
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
+    return createProductCardHtml(product);
   }).join('');
 }
 
-// Kategoriya bo'yicha filtrlash
-function filterCategory(cat, element) {
-  currentCategory = cat;
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  if (element) {
-    element.classList.add('active');
-  }
-  renderProducts();
+function createProductCardHtml(product) {
+  const isArmor = product.id === 'armor';
+  const arrowBtnBg = isArmor 
+    ? 'bg-[#525B62] text-white hover:bg-black' 
+    : 'bg-white border border-gray-300 text-gray-700 hover:bg-black hover:text-white hover:border-black';
+
+  return `
+    <div class="product-studio-card bg-white dark:bg-[#0A4B8F] border border-gray-200 dark:border-white/10 flex flex-col group cursor-pointer overflow-hidden transition-all duration-300" 
+         onclick="openProductDetailView('${product.id}')">
+      
+      <!-- Yuqori rangli tasma -->
+      <div class="h-1.5 w-full" style="background-color: ${product.themeColor};"></div>
+
+      <!-- Studio Kulrang Rasm Qutisi -->
+      <div class="product-studio-box relative h-72 sm:h-80 flex items-center justify-center p-4 overflow-hidden select-none">
+        
+        <!-- Chap yuqori burchakdagi vazn nishoni -->
+        <div class="absolute top-3 left-3 z-10">
+          <span class="px-2.5 py-0.5 text-xs font-bold text-white tracking-wider rounded-sm shadow-sm" style="background-color: ${product.themeColor};">
+            ${product.weight}
+          </span>
+        </div>
+
+        <!-- 3D Qop tasviri -->
+        <img src="${product.image}" 
+             alt="${product.name}" 
+             class="h-56 sm:h-64 object-contain filter drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)] group-hover:scale-105 transition-transform duration-300 pointer-events-none" 
+             loading="lazy" />
+      </div>
+
+      <!-- Pastki Oq Qism -->
+      <div class="product-card-body p-5 bg-white dark:bg-[#0A4B8F] flex items-center justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <h3 class="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight group-hover:text-red-600 dark:group-hover:text-amber-300 transition-colors truncate">
+            ${product.name}
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-300 mt-1 line-clamp-2 leading-snug">
+            ${product.subtitle}
+          </p>
+        </div>
+
+        <!-- Ochish dumaloq tugmasi (↗) -->
+        <button onclick="event.stopPropagation(); openProductDetailView('${product.id}');" 
+                class="w-10 h-10 rounded-full flex items-center justify-center transition-colors flex-shrink-0 ${arrowBtnBg}" 
+                aria-label="${product.name} tafsilotlari">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  `;
 }
+
+// BATAFSIL MAHSULOT OYNASINI OCHISH (2, 3, 4-RASMLARDAGI DIZAYN)
+function openProductDetailView(productId) {
+  const product = PRODUCTS_DATA.find(p => p.id === productId || p.legacyId === productId);
+  if (!product) return;
+
+  // Agar hozir katalog sahifasida bo'lmasa, katalogga o'tamiz
+  if (typeof window.showPageView === 'function') {
+    window.showPageView('catalog', false);
+  }
+
+  const imgEl = document.getElementById('detailProductImage');
+  const badgeEl = document.getElementById('detailProductCategoryBadge');
+  const nameEl = document.getElementById('detailProductName');
+  const subtitleEl = document.getElementById('detailProductSubtitle');
+  const descEl = document.getElementById('detailProductDesc');
+  const featuresEl = document.getElementById('detailProductFeatures');
+  const specsTableEl = document.getElementById('detailProductSpecsTable');
+  const similarGridEl = document.getElementById('similarProductsGrid');
+
+  if (imgEl) {
+    imgEl.src = product.image;
+    imgEl.alt = product.name;
+  }
+  if (badgeEl) {
+    badgeEl.textContent = product.categoryLabel;
+    badgeEl.style.backgroundColor = product.themeColor;
+  }
+  if (nameEl) {
+    nameEl.textContent = product.name;
+  }
+  if (subtitleEl) {
+    subtitleEl.textContent = product.subtitle;
+  }
+  if (descEl) {
+    descEl.textContent = product.desc;
+  }
+
+  // Afzalliklar (Qizil doira ichida oq galochka)
+  if (featuresEl) {
+    featuresEl.innerHTML = (product.features || []).map(feat => `
+      <div class="flex items-center gap-3">
+        <span class="w-6 h-6 rounded-full bg-[#E02424] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+          </svg>
+        </span>
+        <span class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200">${feat}</span>
+      </div>
+    `).join('');
+  }
+
+  // Chiziqli parametrlar jadvali
+  if (specsTableEl) {
+    specsTableEl.innerHTML = `
+      <div class="py-3.5 flex justify-between items-center text-sm sm:text-base">
+        <span class="text-slate-500 dark:text-slate-400">Turi</span>
+        <span class="font-medium text-slate-900 dark:text-white text-right">${product.specs.type || product.subtitle}</span>
+      </div>
+      <div class="py-3.5 flex justify-between items-center text-sm sm:text-base">
+        <span class="text-slate-500 dark:text-slate-400">Kategoriya</span>
+        <span class="font-medium text-slate-900 dark:text-white text-right">${product.specs.category || product.categoryLabel}</span>
+      </div>
+      <div class="py-3.5 flex justify-between items-center text-sm sm:text-base">
+        <span class="text-slate-500 dark:text-slate-400">Qo'llanilishi</span>
+        <span class="font-medium text-slate-900 dark:text-white text-right">${product.specs.application || "Ichki va tashqi ishlar"}</span>
+      </div>
+      <div class="py-3.5 flex justify-between items-center text-sm sm:text-base">
+        <span class="text-slate-500 dark:text-slate-400">Qop og'irligi</span>
+        <span class="font-medium text-slate-900 dark:text-white text-right">${product.specs.weight || product.weight}</span>
+      </div>
+    `;
+  }
+
+  // O'xshash mahsulotlar (shu toifadagi boshqa mahsulotlar)
+  if (similarGridEl) {
+    const similarProducts = PRODUCTS_DATA
+      .filter(p => p.id !== product.id)
+      .sort((a, b) => (a.category === product.category ? -1 : 1))
+      .slice(0, 4);
+
+    similarGridEl.innerHTML = similarProducts.map(p => createProductCardHtml(p)).join('');
+  }
+
+  // Oynalarni almashtirish
+  const gridView = document.getElementById('catalogGridView');
+  const detailView = document.getElementById('catalogDetailView');
+  if (gridView) gridView.classList.add('hidden');
+  if (detailView) detailView.classList.remove('hidden');
+
+  // Katalog boshiga chiqarish
+  const catalogSection = document.getElementById('catalog');
+  if (catalogSection) {
+    catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function closeProductDetailView() {
+  const gridView = document.getElementById('catalogGridView');
+  const detailView = document.getElementById('catalogDetailView');
+  if (detailView) detailView.classList.add('hidden');
+  if (gridView) gridView.classList.remove('hidden');
+
+  const catalogSection = document.getElementById('catalog');
+  if (catalogSection) {
+    catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+window.filterCatalog = filterCatalog;
+window.openProductDetailView = openProductDetailView;
+window.closeProductDetailView = closeProductDetailView;
+
+// Orqaga moslik uchun eski funksiyalar
+function slideProducts(dir) {}
+function updateSliderState() {}
+function filterCategory(cat, element) { filterCatalog(cat === 'all' ? 'barchasi' : cat, element); }
+function handleCatalogSearch(val) {}
+function filterCategoryAndScroll(cat) { filterCatalog(cat === 'all' ? 'barchasi' : cat); }
+
 
 // ==========================================================================
 // 6. MAHSULOTNING INTERAKTIV MODAL OYNASI (PASPORT VA SPETSIFIKATSIYA)
 // ==========================================================================
 function openProductModal(productId) {
-  const product = PRODUCTS_DATA.find(p => p.id === productId);
-  if (!product) return;
-  currentModalProductId = productId;
-
-  const t = TRANSLATIONS[currentLang];
-  const isUz = currentLang === 'uz';
-  const modal = document.getElementById('productModal');
-  const modalContent = document.getElementById('productModalContent');
-  if (!modal || !modalContent) return;
-
-  const title = isUz ? product.title.uz : product.title.ru;
-  const fullDesc = isUz ? product.fullDesc.uz : product.fullDesc.ru;
-  const application = isUz ? product.application.uz : product.application.ru;
-
-  modalContent.innerHTML = `
-    <!-- Modal Sarlavha qismi -->
-    <div class="p-6 md:p-8 bg-slate-900 text-white relative">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
-          <span class="px-3 py-1 rounded text-white text-xs font-bold uppercase tracking-wider" style="background-color: ${product.ribbonColor}">
-            ${product.ruSubtitle}
-          </span>
-          <span class="px-3 py-1 rounded bg-slate-800 text-amber-300 text-xs font-extrabold border border-amber-500/30">
-            ${product.weight}
-          </span>
-        </div>
-        <button onclick="closeProductModal()" class="text-slate-400 hover:text-white transition p-1 rounded-lg hover:bg-slate-800 no-print">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-
-      <div class="flex items-center gap-3.5 mt-3">
-        <img src="assets/images/logo.jpg" alt="XON SAROY" class="w-12 h-12 rounded-xl object-cover border border-amber-400/60 shadow-md flex-shrink-0">
-        <div>
-          <h2 class="text-xl md:text-2xl font-black text-white leading-tight">
-            ${title}
-          </h2>
-          <p class="text-slate-300 text-xs mt-0.5">
-            ${t.brandSubtitle} • Standart: ${product.specs.standard}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Ichki qismi: 2 ustunli (Rasm + Xususiyatlar) -->
-    <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-      <!-- Chap ustun: FRONT 3D Qop rasmi va Tugmalar -->
-      <div class="md:col-span-5 flex flex-col items-center">
-        <div class="w-full max-w-[270px] bg-slate-50 p-4 rounded-2xl border border-slate-200 bag-2d-container">
-          ${getProductBagSvg(product)}
-        </div>
-
-        <div class="w-full mt-6 space-y-3 no-print">
-          <button onclick="triggerOrderForProduct('${product.id}')" class="w-full py-3.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold shadow-lg shadow-red-600/30 transition flex items-center justify-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-            ${t.btnOrderThis}
-          </button>
-          
-          <button onclick="window.print()" class="w-full py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold transition flex items-center justify-center gap-2 border border-slate-300">
-            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-            ${t.btnDownloadPdf}
-          </button>
-        </div>
-      </div>
-
-      <!-- O'ng ustun: Tavsif va Texnik Parametrlar Jadvali -->
-      <div class="md:col-span-7 space-y-6">
-        <div>
-          <h4 class="text-sm font-bold uppercase tracking-wider text-red-600">
-            ${t.modalUsageTitle}
-          </h4>
-          <p class="text-sm text-slate-700 mt-2 leading-relaxed font-normal">
-            ${fullDesc}
-          </p>
-        </div>
-
-        <div>
-          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900">
-            ${t.modalAreaTitle}
-          </h4>
-          <p class="text-xs text-slate-600 mt-1.5 p-3 rounded-lg bg-slate-50 border border-slate-200">
-            ${application}
-          </p>
-        </div>
-
-        <!-- Texnik parametrlar jadvali -->
-        <div>
-          <h4 class="text-sm font-black uppercase tracking-wider text-slate-900 mb-3 flex items-center gap-2">
-            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            ${t.modalSpecsTitle}
-          </h4>
-
-          <div class="overflow-hidden border border-slate-200 rounded-xl shadow-sm">
-            <table class="w-full text-left text-xs text-slate-700">
-              <tbody class="divide-y divide-slate-200">
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600 w-1/2">${t.specWater}</td>
-                  <td class="p-3 font-bold text-slate-900">${isUz ? product.specs.waterRatio.uz : product.specs.waterRatio.ru}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specConsumption}</td>
-                  <td class="p-3 font-bold text-slate-900">${isUz ? product.specs.consumption.uz : product.specs.consumption.ru}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specDrying}</td>
-                  <td class="p-3 font-bold text-slate-900">${isUz ? product.specs.dryingTime.uz : product.specs.dryingTime.ru}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specLayer}</td>
-                  <td class="p-3 font-bold text-slate-900">${isUz ? product.specs.layerThickness.uz : product.specs.layerThickness.ru}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specTemp}</td>
-                  <td class="p-3 font-bold text-slate-900">${product.specs.workTemp}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specShelf}</td>
-                  <td class="p-3 font-bold text-slate-900">${isUz ? product.specs.shelfLife.uz : product.specs.shelfLife.ru}</td>
-                </tr>
-                <tr class="tech-spec-row">
-                  <td class="p-3 font-semibold text-slate-600">${t.specStandard}</td>
-                  <td class="p-3 font-bold text-slate-900">${product.specs.standard}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  modal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
+  openProductDetailView(productId);
 }
 
 function closeProductModal() {
@@ -695,9 +676,23 @@ function calculateConsumption() {
   const totalKg = Math.ceil(area * thickness * ratePerMm * 1.05);
   const bagWeight = product.defaultWeightKg || 25;
   const totalBags = Math.ceil(totalKg / bagWeight);
+  const estWater = Math.ceil(totalKg * 0.25);
 
   resultKgEl.textContent = `${totalKg} kg`;
   resultBagsEl.textContent = `${totalBags} ${currentLang === 'uz' ? "qop" : "мешков"}`;
+
+  const resultWaterEl = document.getElementById('calcResultWater');
+  if (resultWaterEl) {
+    resultWaterEl.textContent = `~${estWater} L`;
+  }
+}
+
+function setCalcPreset(area, thickness) {
+  const areaInput = document.getElementById('calcArea');
+  const thicknessInput = document.getElementById('calcThickness');
+  if (areaInput) areaInput.value = area;
+  if (thicknessInput) thicknessInput.value = thickness;
+  calculateConsumption();
 }
 
 function handleCalcOrder() {
@@ -757,7 +752,24 @@ function closeOrderModal() {
 }
 
 function triggerOrderForProduct(productId) {
-  openOrderModal(productId);
+  closeProductModal();
+  const product = PRODUCTS_DATA.find(p => p.id === productId);
+  const commentField = document.getElementById('orderClientComment');
+  const nameField = document.getElementById('orderClientName');
+  if (commentField && product) {
+    const isUz = currentLang === 'uz';
+    const isRu = currentLang === 'ru';
+    const title = isUz ? product.title.uz : (isRu ? product.title.ru : product.name);
+    commentField.value = isUz 
+      ? `${title} (${product.weight}) mahsuloti bo'yicha buyurtma bermoqchiman.` 
+      : (isRu ? `Хочу заказать ${title} (${product.weight}).` : `I would like to order ${title} (${product.weight}).`);
+  }
+  if (typeof window.showPageView === 'function') {
+    window.showPageView('contact');
+  }
+  if (nameField) {
+    setTimeout(() => nameField.focus(), 300);
+  }
 }
 
 async function handleOrderFormSubmit(e) {
@@ -765,29 +777,32 @@ async function handleOrderFormSubmit(e) {
 
   const form = document.getElementById('leadOrderForm');
   const submitBtn = document.getElementById('orderSubmitBtn');
-  const successModal = document.getElementById('orderSuccessModal');
+  const successModal = document.getElementById('successModal') || document.getElementById('orderSuccessModal');
 
-  const name = document.getElementById('orderName').value.trim();
-  const phone = document.getElementById('orderPhone').value.trim();
-  const productSelect = document.getElementById('orderProductSelect');
-  const productTitle = productSelect ? productSelect.options[productSelect.selectedIndex].text : "Konsultatsiya";
-  const quantity = document.getElementById('orderQuantity').value.trim();
-  const note = document.getElementById('orderNote').value.trim();
+  const nameInput = document.getElementById('orderClientName') || document.getElementById('orderName');
+  const phoneInput = document.getElementById('orderClientPhone') || document.getElementById('orderPhone');
+  const commentInput = document.getElementById('orderClientComment') || document.getElementById('orderNote');
+
+  const name = nameInput ? nameInput.value.trim() : '';
+  const phone = phoneInput ? phoneInput.value.trim() : '';
+  const comment = commentInput ? commentInput.value.trim() : '';
 
   if (!name || !phone) {
-    alert(currentLang === 'uz' ? "Iltimos, ismingiz va telefon raqamingizni kiriting!" : "Пожалуйста, введите имя и номер телефона!");
+    alert(currentLang === 'uz' ? "Iltimos, ismingiz va telefon raqamingizni kiriting!" : (currentLang === 'ru' ? "Пожалуйста, введите имя и номер телефона!" : "Please enter your name and phone number!"));
     return;
   }
 
-  const originalBtnText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = `
-    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-    </svg>
-    ${TRANSLATIONS[currentLang].formSubmitting}
-  `;
+  const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      ${TRANSLATIONS[currentLang] ? TRANSLATIONS[currentLang].formSubmitting : 'Yuborilmoqda...'}
+    `;
+  }
 
   const timeNow = new Date().toLocaleString();
   const telegramMessage = `
@@ -795,9 +810,7 @@ async function handleOrderFormSubmit(e) {
 ━━━━━━━━━━━━━━━━━━
 👤 <b>Mijoz:</b> ${name}
 📞 <b>Telefon:</b> <code>${phone}</code>
-📦 <b>Mahsulot:</b> ${productTitle}
-🔢 <b>Miqdor:</b> ${quantity || 'Belgilanmagan'}
-📍 <b>Manzil / Izoh:</b> ${note || 'Yo\'q'}
+📝 <b>Xabar / Izoh:</b> ${comment || 'Belgilanmagan'}
 ⏰ <b>Vaqt:</b> ${timeNow}
 🌐 <b>Til:</b> ${currentLang.toUpperCase()}
   `.trim();
@@ -824,15 +837,16 @@ async function handleOrderFormSubmit(e) {
   } else {
     console.log("XON SAROY Telegram Form Xabari:", telegramMessage);
     const existingLeads = JSON.parse(localStorage.getItem('xon_leads') || '[]');
-    existingLeads.push({ name, phone, productTitle, quantity, note, time: timeNow });
+    existingLeads.push({ name, phone, comment, time: timeNow });
     localStorage.setItem('xon_leads', JSON.stringify(existingLeads));
   }
 
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = originalBtnText;
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  }
 
-  closeOrderModal();
-  form.reset();
+  if (form) form.reset();
 
   if (successModal) {
     successModal.classList.remove('hidden');
@@ -841,7 +855,7 @@ async function handleOrderFormSubmit(e) {
 }
 
 function closeSuccessModal() {
-  const modal = document.getElementById('orderSuccessModal');
+  const modal = document.getElementById('successModal') || document.getElementById('orderSuccessModal');
   if (modal) {
     modal.classList.add('hidden');
     document.body.style.overflow = '';
@@ -896,33 +910,135 @@ function closeBonusModal() {
 }
 
 // ==========================================================================
-// 9. DASTUR YUKLANGANDA ISHGA TUSHISH (INIT)
+// 9. OXFORD BLUE HERO SLIDER VA DASTUR YUKLANGANDA ISHGA TUSHISH (INIT)
 // ==========================================================================
-document.addEventListener('DOMContentLoaded', () => {
-  setLanguage(currentLang);
 
-  const heroBagContainer = document.getElementById('heroFeaturedBag');
-  if (heroBagContainer && PRODUCTS_DATA[0]) {
-    heroBagContainer.innerHTML = `
-      <div class="bag-2d-container w-72">
-        ${getProductBagSvg(PRODUCTS_DATA[0])}
-      </div>
-    `;
+let currentHeroSlide = 0;
+const totalHeroSlides = 4;
+let heroSlideTimer = null;
+
+function showHeroSlide(index) {
+  currentHeroSlide = (index + totalHeroSlides) % totalHeroSlides;
+
+  // Slaydlarni almashtirish (active-slide / hidden-slide)
+  for (let i = 0; i < totalHeroSlides; i++) {
+    const slide = document.getElementById(`heroSlide${i}`);
+    if (slide) {
+      if (i === currentHeroSlide) {
+        slide.classList.remove('hidden-slide');
+        slide.classList.add('active-slide');
+      } else {
+        slide.classList.add('hidden-slide');
+        slide.classList.remove('active-slide');
+      }
+    }
   }
 
-  const areaInput = document.getElementById('calcArea');
-  const thicknessInput = document.getElementById('calcThickness');
-  const selectProduct = document.getElementById('calcProductSelect');
+  // Sahifalash nuqtalari (Pagination Dots)
+  const dots = document.querySelectorAll('.hero-dot');
+  dots.forEach((dot, idx) => {
+    if (idx === currentHeroSlide) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
 
-  if (areaInput) areaInput.addEventListener('input', calculateConsumption);
-  if (thicknessInput) thicknessInput.addEventListener('input', calculateConsumption);
-  if (selectProduct) selectProduct.addEventListener('change', calculateConsumption);
+  // Raqam ko'rsatkichini yangilash (01 / 04)
+  const numElem = document.getElementById('heroSlideNumber');
+  if (numElem) {
+    numElem.textContent = `0${currentHeroSlide + 1} / 0${totalHeroSlides}`;
+  }
+}
 
+function nextHeroSlide() {
+  showHeroSlide(currentHeroSlide + 1);
+  resetHeroTimer();
+}
+
+function prevHeroSlide() {
+  showHeroSlide(currentHeroSlide - 1);
+  resetHeroTimer();
+}
+
+function goToHeroSlide(index) {
+  showHeroSlide(index);
+  resetHeroTimer();
+}
+
+function resetHeroTimer() {
+  if (heroSlideTimer) clearInterval(heroSlideTimer);
+  heroSlideTimer = setInterval(() => {
+    showHeroSlide(currentHeroSlide + 1);
+  }, 7000);
+}
+
+function switchHeroProduct(slug) {
+  // Legacy qo'llab-quvvatlash uchun xavfsiz wrapper
+  const idx = ['infinity', 'silkpoly', 'dominant', 'glatt05'].indexOf(slug);
+  if (idx !== -1) {
+    goToHeroSlide(idx);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Tilni o'rnatish
+  setLanguage(currentLang);
+
+  // 2. Hero slaydini boshlash
+  showHeroSlide(0);
+  resetHeroTimer();
+
+  // 3. Katta gorizontal mahsulotlar slayderi (drag and scroll)
+  const slider = document.getElementById('productsGrid');
+  if (slider) {
+    slider.addEventListener('scroll', updateSliderState, { passive: true });
+
+    let isDown = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    slider.addEventListener('mousedown', (e) => {
+      if (e.target.closest('button')) return;
+      isDown = true;
+      slider.style.cursor = 'grabbing';
+      startX = e.pageX - slider.offsetLeft;
+      scrollStart = slider.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDown) {
+        isDown = false;
+        if (slider) slider.style.cursor = '';
+      }
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      slider.scrollLeft = scrollStart - walk;
+    });
+
+    setTimeout(updateSliderState, 200);
+  }
+
+  // 4. Jonli qidiruv
+  const searchInput = document.getElementById('catalogSearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      handleCatalogSearch(e.target.value);
+    });
+  }
+
+  // 5. Ariza formasi
   const orderForm = document.getElementById('leadOrderForm');
   if (orderForm) {
     orderForm.addEventListener('submit', handleOrderFormSubmit);
   }
 
+  // 6. Mobil menyu
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   if (mobileMenuBtn && mobileMenu) {
@@ -931,13 +1047,173 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 7. Klaviatura Esc tugmasi
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeProductModal();
-      closeOrderModal();
+      if (typeof closeOrderModal === 'function') closeOrderModal();
       closeSuccessModal();
-      closeBonusModal();
-      closeTelegramSettingsModal();
+      if (typeof closeBonusModal === 'function') closeBonusModal();
+      if (typeof closeTelegramSettingsModal === 'function') closeTelegramSettingsModal();
+      if (typeof closeCertModal === 'function') closeCertModal();
+      if (typeof closeGalleryModal === 'function') closeGalleryModal();
     }
   });
+
+  // 8. Tungi rejim va Rang tanlash olib tashlangan - toza standart ko'rinish
+  try {
+    localStorage.removeItem('xon_theme');
+    localStorage.removeItem('xon_theme_color');
+    document.documentElement.classList.remove('dark');
+    document.documentElement.removeAttribute('data-theme-color');
+  } catch (e) {}
+
+  // 9. Sayt ochilganda yoki F5 bosilganda joriy hash bo'limini (yoki 'home'ni) ko'rsatish
+  const initialHash = window.location.hash.replace('#', '').trim();
+  window.showPageView(initialHash || 'home', false);
+});
+
+// 8. Hamkorlar karuselini o'ngga va chapga o'tkazish
+window.scrollPartners = function(direction) {
+  const carousel = document.getElementById('partnersCarousel');
+  if (!carousel) return;
+  const scrollAmount = 260;
+  if (direction === 'prev') {
+    carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else {
+    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+};
+
+// 9. Sertifikatlar va Sovrinlar tablarini almashtirish
+window.switchAwardsTab = function(tab) {
+  const certsPanel = document.getElementById('certsPanel');
+  const awardsPanel = document.getElementById('awardsPanel');
+  const btnCerts = document.getElementById('tabBtnCerts');
+  const btnAwards = document.getElementById('tabBtnAwards');
+
+  if (tab === 'certificates') {
+    if (certsPanel) certsPanel.classList.remove('hidden');
+    if (awardsPanel) awardsPanel.classList.add('hidden');
+    if (btnCerts) btnCerts.className = "px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-sm bg-oxford text-white";
+    if (btnAwards) btnAwards.className = "px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all";
+  } else {
+    if (certsPanel) certsPanel.classList.add('hidden');
+    if (awardsPanel) awardsPanel.classList.remove('hidden');
+    if (btnAwards) btnAwards.className = "px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-sm bg-oxford text-white";
+    if (btnCerts) btnCerts.className = "px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all";
+  }
+};
+
+// 10. Sertifikat / Sovrin Lightbox modalini ochish
+window.openCertModal = function(title, desc, code) {
+  const modal = document.getElementById('certModal');
+  if (!modal) return;
+  const titleEl = document.getElementById('certModalTitle');
+  const descEl = document.getElementById('certModalDesc');
+  const codeEl = document.getElementById('certModalCode');
+
+  if (titleEl) titleEl.textContent = title;
+  if (descEl) descEl.textContent = desc;
+  if (codeEl) codeEl.textContent = code || '';
+
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+};
+
+// 11. Sertifikat / Sovrin modalini yopish
+window.closeCertModal = function() {
+  const modal = document.getElementById('certModal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+};
+
+// 12. Galereya modalini ochish va yopish
+window.openGalleryModal = function(slot, title, desc) {
+  const modal = document.getElementById('galleryModal');
+  if (!modal) return;
+  const slotEl = document.getElementById('galleryModalSlot');
+  const titleEl = document.getElementById('galleryModalTitle');
+  const descEl = document.getElementById('galleryModalDesc');
+
+  if (slotEl) slotEl.textContent = 'Fotosurat #' + slot;
+  if (titleEl) titleEl.textContent = title;
+  if (descEl) descEl.textContent = desc || '';
+
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeGalleryModal = function() {
+  const modal = document.getElementById('galleryModal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+};
+
+// 13. Alohida oynalar (SPA View Router) boshqaruvi
+window.showPageView = function(viewName, updateHash = true) {
+  const validViews = [
+    'home', 'production', 'gallery', 
+    'catalog', 'packaging', 'news', 'partners', 'contact'
+  ];
+
+  // Aliaslar
+  if (viewName === 'about') viewName = 'production';
+  if (viewName === 'qorishmalar' || viewName === 'mixes') viewName = 'catalog';
+
+  if (!validViews.includes(viewName)) {
+    viewName = 'home';
+  }
+
+  // Barcha oynalarni yashirish
+  document.querySelectorAll('.site-page-view').forEach(view => {
+    view.classList.remove('active-view');
+    view.style.display = 'none';
+  });
+
+  // Tanlangan oynani ochish
+  const targetView = document.getElementById('view-' + viewName);
+  if (targetView) {
+    targetView.classList.add('active-view');
+    targetView.style.display = 'block';
+  }
+
+  // URL Hash yangilash
+  if (updateHash) {
+    if (viewName === 'home') {
+      if (window.location.hash) {
+        history.pushState(null, '', window.location.pathname);
+      }
+    } else {
+      window.location.hash = '#' + viewName;
+    }
+  }
+
+  // Sahifa boshiga silliq chiqarish
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Mobil menyuni yopish
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+    mobileMenu.classList.add('hidden');
+  }
+
+  // Agar katalog bo'lsa, mahsulotlar ro'yxatini yangilash
+  if (viewName === 'catalog') {
+    setTimeout(() => {
+      if (typeof renderProducts === 'function') renderProducts();
+    }, 50);
+  }
+};
+
+// URL Hash o'zgarganda (brauzer orqaga/oldinga tugmalari) oynani almashtirish
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '').trim();
+  if (hash) {
+    window.showPageView(hash, false);
+  } else {
+    window.showPageView('home', false);
+  }
 });
